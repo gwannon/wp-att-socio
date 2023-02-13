@@ -1,2 +1,2 @@
-# wp-att-cliente
-Plugin de de WordPress de atención al cliente que logea contra sistema OMESA.
+# wp-att-socio
+Plugin de de WordPress de atención al socio que logea contra sistema OMESA.
