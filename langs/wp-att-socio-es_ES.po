@@ -1,0 +1,293 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ac-update-forms\n"
+"POT-Creation-Date: 2023-02-14 16:33+0100\n"
+"PO-Revision-Date: 2023-02-14 16:34+0100\n"
+"Last-Translator: \n"
+"Language-Team: jorge@enutt.net\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-KeywordsList: _;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../lib/application.php:11 ../lib/application.php:22
+#: ../lib/application.php:577
+msgid "Applications"
+msgstr "Solicitudes"
+
+#: ../lib/application.php:12 ../lib/application.php:388
+msgid "Application"
+msgstr "Solicitud"
+
+#: ../lib/application.php:13
+msgid "Add new"
+msgstr "Anadir nueva"
+
+#: ../lib/application.php:14 ../lib/application.php:26
+msgid "Add new application"
+msgstr "Añadir nueva solicitud"
+
+#: ../lib/application.php:15
+msgid "Edit application"
+msgstr "Editar solicitud"
+
+#: ../lib/application.php:16
+msgid "New application"
+msgstr "Nueva solicitud"
+
+#: ../lib/application.php:17
+msgid "All applications"
+msgstr "Todas las solicitudes"
+
+#: ../lib/application.php:18 ../lib/application.php:334
+#: ../lib/application.php:595 ../lib/application.php:600
+msgid "View application"
+msgstr "Ver solicitud"
+
+#: ../lib/application.php:19
+msgid "Search application"
+msgstr "Buscar solicitud"
+
+#: ../lib/application.php:20
+msgid "Application not found"
+msgstr "Solicitud no encontrada"
+
+#: ../lib/application.php:21
+msgid "Application not found in trash bin"
+msgstr "Solicitud no encontrada en la papelera"
+
+#: ../lib/application.php:43 ../lib/application.php:53
+msgid "Types"
+msgstr "Tipos de solicitudes"
+
+#: ../lib/application.php:44 ../lib/application.php:178
+msgid "Type"
+msgstr "Tipo de solicitud"
+
+#: ../lib/application.php:45
+msgid "Search type"
+msgstr "Buscar tipo de solicitud"
+
+#: ../lib/application.php:46
+msgid "All types"
+msgstr "Todos los tipos de solicitud"
+
+#: ../lib/application.php:47 ../lib/application.php:48
+msgid "Parent type"
+msgstr ""
+
+#: ../lib/application.php:49
+msgid "Edit type"
+msgstr "Editar tipo de solicitud"
+
+#: ../lib/application.php:50
+msgid "Update type"
+msgstr "Actualizar tipo de solicitud"
+
+#: ../lib/application.php:51
+msgid "Add type"
+msgstr "Añadir tipo de solicitud"
+
+#: ../lib/application.php:52
+msgid "New type"
+msgstr "Nuevo tipo de solicitud"
+
+#: ../lib/application.php:72
+msgid "Contact emails (separated by commas)"
+msgstr "Emails de contacto (Separados por comas)"
+
+#: ../lib/application.php:101 ../lib/application.php:102
+#: ../lib/application.php:111 ../lib/application.php:179
+msgid "Status"
+msgstr "Estado"
+
+#: ../lib/application.php:103
+msgid "Search status"
+msgstr "Bucar estado"
+
+#: ../lib/application.php:104
+msgid "All status"
+msgstr "Todos los estados"
+
+#: ../lib/application.php:105 ../lib/application.php:106
+msgid "Parent status"
+msgstr ""
+
+#: ../lib/application.php:107
+msgid "Edit status"
+msgstr "Editar estado"
+
+#: ../lib/application.php:108
+msgid "Update status"
+msgstr "Actualizar estado"
+
+#: ../lib/application.php:109
+msgid "Add status"
+msgstr "Añadir estado"
+
+#: ../lib/application.php:110
+msgid "New status"
+msgstr "Nuevo estado"
+
+#: ../lib/application.php:131 ../lib/application.php:331
+#: ../lib/application.php:389 ../lib/application.php:608
+msgid "Partner number"
+msgstr "Número de socio"
+
+#: ../lib/application.php:132 ../lib/application.php:330
+#: ../lib/application.php:390 ../lib/application.php:609
+msgid "Name"
+msgstr "Nombre"
+
+#: ../lib/application.php:133 ../lib/application.php:332
+#: ../lib/application.php:391 ../lib/application.php:610
+msgid "Telephone"
+msgstr "Teléfono"
+
+#: ../lib/application.php:134 ../lib/application.php:333
+#: ../lib/application.php:392 ../lib/application.php:611
+msgid "Email"
+msgstr "Email"
+
+#: ../lib/application.php:135
+msgid "Notes"
+msgstr "Notas"
+
+#: ../lib/application.php:136 ../lib/application.php:323
+msgid "Attached File"
+msgstr "Archivo adjunto"
+
+#: ../lib/application.php:144
+msgid "Application Data"
+msgstr "Datos de la solicitud"
+
+#: ../lib/application.php:158 ../lib/application.php:172
+#: ../lib/application.php:569 ../lib/application.php:583
+msgid "Response"
+msgstr "Responder"
+
+#: ../lib/application.php:213 ../lib/application.php:244
+msgid "Show all"
+msgstr "Mostrar todo"
+
+#: ../lib/application.php:300
+#, php-format
+msgid "%s %s %s submitted by %s (%s)"
+msgstr "%s %s %s enviado por %s (%s)"
+
+#: ../lib/application.php:341 ../lib/application.php:345
+msgid "Thanks you, your application has been received."
+msgstr "Gracias, su solicitud ha sido recibida."
+
+#: ../lib/application.php:341 ../lib/application.php:345
+msgid "As soon as possible we will send you a response."
+msgstr "Tan pronto como nos sea posible le daremos una respuesta."
+
+#: ../lib/application.php:346
+msgid "We have received your appliation"
+msgstr "Hemos recibido su solicitud"
+
+#: ../lib/application.php:393
+msgid "Attach an image/document"
+msgstr ""
+"Adjunte un documento o imagen (Formatos soportados: gif,jpg,jpeg,png,doc,"
+"docx,pdf)"
+
+#: ../lib/application.php:394
+msgid "Send"
+msgstr "Enviar"
+
+#: ../lib/application.php:556
+msgid "Export to CSV"
+msgstr "Exportar a CSV"
+
+#: ../lib/application.php:588
+#, php-format
+msgid "Response to your application created at %s"
+msgstr "Respuesta a su solicitud hecha el %s"
+
+#: ../lib/application.php:594
+msgid "Response sent correctly"
+msgstr "Respuesta enviada correctamente"
+
+#: ../lib/application.php:599
+msgid ""
+"An error occurred while trying to send the email. Please try again later."
+msgstr ""
+"Ocurrió un error al intentar enviar el correo electrónico. Por favor, "
+"intentatelo más tarde."
+
+#: ../lib/application.php:607
+msgid "Date"
+msgstr "Fecha"
+
+#: ../lib/application.php:618
+msgid "Send response"
+msgstr "Enviar respuesta"
+
+#: ../lib/application.php:653
+msgid "Login to access to Partner attention zone."
+msgstr "Identifícate para poder acceder a la zona de atención al socio."
+
+#: ../lib/application.php:655 ../lib/application.php:656
+msgid "Parnert number (6 digits)"
+msgstr "Nº de socio (6 dígitos)"
+
+#: ../lib/application.php:659 ../lib/application.php:660
+msgid "Password"
+msgstr "Contraseña"
+
+#: ../lib/application.php:662
+msgid "Login"
+msgstr "Entrar"
+
+#: ../lib/application.php:663
+msgid "Remenber password"
+msgstr "Recordar Contraseña"
+
+#: ../lib/custom_posts.php:29
+msgid "View file"
+msgstr "Ver fichero"
+
+#: ../lib/custom_posts.php:32 ../lib/custom_posts.php:168
+msgid "Add file"
+msgstr "Añadir fichero"
+
+#: ../lib/custom_posts.php:84
+msgid "Drag and drop"
+msgstr ""
+
+#: ../lib/custom_posts.php:109
+msgid "Write here the location"
+msgstr ""
+
+#: ../lib/custom_posts.php:110
+msgid "Search location"
+msgstr ""
+
+#: ../lib/custom_posts.php:145
+msgid "Add image"
+msgstr ""
+
+#~ msgid "Partner attention"
+#~ msgstr "Atención al socio"
+
+#~ msgid "application"
+#~ msgstr "solicitud"
+
+#~ msgid "Partner name"
+#~ msgstr "Nombre"
+
+#~ msgid "Partner phone"
+#~ msgstr "Teléfono"
+
+#~ msgid "Partner email"
+#~ msgstr "Email"
+
+#~ msgid "Emails de contacto (separadospor comas)"
+#~ msgstr "Emails de contacto (Separados por comas)"
