@@ -69,6 +69,12 @@ function wp_att_socio_application_type_fields($tag) {
 	$term_meta = get_option( "taxonomy_".$tag->term_id);
 	?>
 	<tr class="form-field">
+		<th scope="row" valign="top"><?php _e('Image', 'wp-att-socio'); ?></th>
+		<td>
+			<input type="text" name="term_meta[image]" id="term_meta[image]" size="3" style="width: 100%;" value="<?php echo $term_meta['image'] ? $term_meta['image'] : ''; ?>">
+		</td>
+	</tr>
+	<tr class="form-field">
 		<th scope="row" valign="top"><?php _e('Contact emails (separated by commas)', 'wp-att-socio'); ?></th>
 		<td>
 			<input type="text" name="term_meta[contact_emails]" id="term_meta[contact_emails]" size="3" style="width: 100%;" value="<?php echo $term_meta['contact_emails'] ? $term_meta['contact_emails'] : ''; ?>">
@@ -354,8 +360,8 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 		]);
 		$html .= "<ul>";
 		foreach ($types as $type) {
-			//$term_meta = get_option( "taxonomy_".$type->term_id);
-			$html .= "<li id='tab-".$type->term_id."'><h3><b>".$type->name.":</b></h3><p>".$type->description."</p><ul>";
+			$term_meta = get_option( "taxonomy_".$type->term_id);
+			$html .= "<li id='tab-".$type->term_id."' style='background-image: url(".$term_meta['image'].");'><h3><b>".$type->name.":</b></h3><p>".$type->description."</p><ul>";
 			$subtypes = get_terms([
 				'taxonomy' => 'type',
 				'hide_empty' => false,
@@ -385,13 +391,13 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 			$html .= "</ul></li>";
 		}
 		$html .= "</ul>";
-		$html .= "<div><div><label>".__("Application", 'wp-att-socio')."<br/><textarea name='application_text'></textarea></label></div>";
+		$html .= "<div><div><label>".__("Application", 'wp-att-socio')."<br/><textarea name='application_text' rows='10'></textarea></label></div>";
 		$html .= "<div><label>".__("Partner number", 'wp-att-socio')."<br/><input type='text' name='application_partner_number' value='".$datos_sesion['user']['login']."' required ></label></div>";
 		$html .= "<div><label>".__("Name", 'wp-att-socio')."<br/><input type='text' name='application_partner_name' value='".$datos_sesion['user']['nomabo']." ".$datos_sesion['user']['apeabo']."' required ></label></div>";	
 		$html .= "<div><label>".__("Telephone", 'wp-att-socio')."<br/><input type='text' name='application_partner_phone' required ></label></div>";	
 		$html .= "<div><label>".__("Email", 'wp-att-socio')."<br/><input type='email' name='application_partner_email' required ></label></div>";	
 		$html .= "<div><label>".__("Attach an image/document", 'wp-att-socio')."<br/><input type='file' name='application_partner_file' accept='.gif,.jpg,.jpeg,.png,.doc,.docx,.pdf'></label></div>";				
-		$html .= "<input type='submit' name='application_create' value='".__("Send", 'wp-att-socio')."' /></div>";
+		$html .= "<br/><input type='submit' name='application_create' value='".__("Send", 'wp-att-socio')."' /></div>";
 		$html .= "</form>";
   }
   $html .= "<style>
@@ -400,17 +406,32 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
     align-content: flex-start;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 20px;
+		flex-wrap: wrap;
+		gap: 20px;
+    padding: 0;
+    margin: 0 0 20px 0;
 	}
 
 	#partner-attention > ul > li {
-		width: 33%;
-		display: block;
-		cursor: pointer;
-		border: 1px solid #cecece;
-		border-radius: 10px;
-		padding: 20px;
-		position: relative;
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    border: 1px solid #cecece;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    padding-top: 180px;
+    background: #cecece none top center no-repeat;
+    background-size: auto 170px;
+		box-sizing: border-box;
+	}
+
+	@media (min-width: 600px) {
+		#partner-attention > ul > li {
+			width: calc(33% - 12px);
+			padding-top: 150px;
+			background-size: auto 140px;
+		}
 	}
 
 	#partner-attention > ul > li > ul {
@@ -453,10 +474,16 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 	#partner-attention > div {
 		display: none;
 		margin: auto;
-		max-width: 50%;
+
 		border: 1px solid #cecece;
 		border-radius: 10px;
 		padding: 20px;
+	}
+
+	@media (min-width: 600px) {
+		#partner-attention > div {
+			max-width: 50%;
+		}
 	}
 
 	#partner-attention > div.opened {
@@ -483,6 +510,9 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 		console.log('check');
 		if(jQuery('#partner-attention input[type=radio]:checked').length !== jQuery('#partner-attention input[type=radio]').length) {
 			jQuery('#partner-attention > div').addClass('opened');
+			jQuery('html,body').animate({
+					scrollTop: jQuery('#partner-attention > div').offset().top - 200
+			},'slow');
 		} else {
 			jQuery('#partner-attention > div').removeClass('opened');
 		}
@@ -655,7 +685,7 @@ function wp_att_socio_page_settings() {
 // Shortcode para formulario login oficina virtual.
 add_shortcode('wp_att_socio_login', function ($atts, $content, $tag) {
   global $cKplugin, $cKjolaseta, $conf_global, $datos_sesion;
-
+	ob_start(); 
 	// Recepción de prg
 	$prg = $cKplugin->cKodea->prg_data_get('_prg', get_current_user_id());
 	$msg = (isset($prg['msg']))? $prg['msg'] : false;
@@ -664,12 +694,26 @@ add_shortcode('wp_att_socio_login', function ($atts, $content, $tag) {
 		$datos_sesion['noticia_msg'] = false;
 		$msg = msg_prg('login-noticia');
 	}*/ ?>
+<script>
+  cKodea.jQuery(function ($) {
+    // Muestra notificaciones
+    $('._notify').fadeIn();
 
+    // Oculta notificaciones
+    $(document).on('click', '._notify-cerrar', function (e) {
+      e.preventDefault();
+      $(e.target.closest('._notify')).fadeOut();
+    });
+  });
+</script>
 <div><?= notify($msg); ?></div>
-<?php ob_start(); // nuevo nivel de buffer 
-	if($datos_sesion['login'] == 1) {
-		echo do_shortcode("[att-socio]");
-	} else { ?>
+<?php // nuevo nivel de buffer 
+	if($datos_sesion['login'] == 1) { ?>
+		<div>
+			<h4 style="text-align: center; margin-bottom: 30px;"><?php echo sprintf (__("Welcome to our partner attention zone <strong>%s</strong>", 'wp-att-socio'), $datos_sesion['user']['nomabo']." ".$datos_sesion['user']['apeabo']); ?></h4>
+			<?php echo do_shortcode("[att-socio]"); ?>
+		</div>
+	<?php } else { ?>
 	<form action="<?= \Ilunabar\PLUGIN_AJAX; ?>" method="post" class="formulario">
 		<?= wp_nonce_field('ckodea_form_prg', '_wpnonce', true, false); ?>
 		<input type="hidden" name="action" value="application_login">
@@ -723,33 +767,26 @@ add_action('ckodea_ajax_application_login', function () {
       $datos_sesion['user']    = $login_data;
       $datos_sesion['numabo']  = $usuario;
       $datos_sesion['sem']     = md5($usuario.'jolaris');
-			$datos_sesion['noticia_url'] = "/atencion-al-socio/";
+			// Preparamos prg
+			/*$prg = $cKplugin->cKodea->prg_data_save([
+				'msg' => msg_prg('login-ok')
+			], get_current_user_id());*/
+			$cKplugin->cKodea->do_exit(303, get_the_permalink(WP_ATT_SOCIO_PAGE_ID).'?_prg='.$prg);
 
 
-     if ($datos_sesion['noticia_url']) {
-        $url = $datos_sesion['noticia_url'];
-        $datos_sesion['noticia_url'] = null;
-        $cKplugin->cKodea->do_exit(303, $url);
-      } else {
-        // Preparamos prg
-        $prg = $cKplugin->cKodea->prg_data_save([
-          'msg' => msg_prg('login-ok')
-        ], get_current_user_id());
-        $cKplugin->cKodea->do_exit(303, $conf_global['url']['login-registro-'.ICL_LANGUAGE_CODE].'?_prg='.$prg);
-      }
-    } else {
-      // Preparamos prg
+		} else {
+			// Preparamos prg
       $prg = $cKplugin->cKodea->prg_data_save([
         'msg' => msg_prg('login-error')
       ], get_current_user_id());
-      $cKplugin->cKodea->do_exit(303, $conf_global['url']['login-registro-'.ICL_LANGUAGE_CODE].'?_prg='.$prg);
+      $cKplugin->cKodea->do_exit(303, get_the_permalink(WP_ATT_SOCIO_PAGE_ID).'?_prg='.$prg);
     }
   } else {
     // Preparamos prg
     $prg = $cKplugin->cKodea->prg_data_save([
       'msg' => msg_prg('sesion-caducada')
     ], get_current_user_id());
-    $cKplugin->cKodea->do_exit(303, $conf_global['url']['login-registro-'.ICL_LANGUAGE_CODE].'?_prg='.$prg);
+    $cKplugin->cKodea->do_exit(303, get_the_permalink(WP_ATT_SOCIO_PAGE_ID).'?_prg='.$prg);
   }
 });
 

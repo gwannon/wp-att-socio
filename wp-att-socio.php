@@ -44,6 +44,7 @@ include_once(plugin_dir_path(__FILE__).'lib/application.php');
 /* ---------- Globals ---------------- */
 define('WP_ATT_SOCIO_DEFAULT_STATUS', 104);
 define('WP_ATT_SOCIO_CLOSED_STATUS', 107);
+define('WP_ATT_SOCIO_PAGE_ID', 14836);
 
 /* ----------- Includes ------------ */
 /*
