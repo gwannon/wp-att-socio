@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ac-update-forms\n"
-"POT-Creation-Date: 2023-02-15 09:53+0100\n"
-"PO-Revision-Date: 2023-02-15 09:54+0100\n"
+"POT-Creation-Date: 2023-02-20 13:10+0100\n"
+"PO-Revision-Date: 2023-02-20 13:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: jorge@enutt.net\n"
 "Language: es_ES\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../lib/application.php:11 ../lib/application.php:22
-#: ../lib/application.php:607
+#: ../lib/application.php:653
 msgid "Applications"
 msgstr "Solicitudes"
 
-#: ../lib/application.php:12 ../lib/application.php:394
+#: ../lib/application.php:12 ../lib/application.php:414
 msgid "Application"
 msgstr "Solicitud"
 
@@ -45,7 +45,7 @@ msgid "All applications"
 msgstr "Todas las solicitudes"
 
 #: ../lib/application.php:18 ../lib/application.php:340
-#: ../lib/application.php:625 ../lib/application.php:630
+#: ../lib/application.php:671 ../lib/application.php:676
 msgid "View application"
 msgstr "Ver solicitud"
 
@@ -97,7 +97,11 @@ msgstr "Añadir tipo de solicitud"
 msgid "New type"
 msgstr "Nuevo tipo de solicitud"
 
-#: ../lib/application.php:72 ../lib/application.php:78
+#: ../lib/application.php:72
+msgid "Image"
+msgstr ""
+
+#: ../lib/application.php:78
 msgid "Contact emails (separated by commas)"
 msgstr "Emails de contacto (Separados por comas)"
 
@@ -135,22 +139,22 @@ msgid "New status"
 msgstr "Nuevo estado"
 
 #: ../lib/application.php:137 ../lib/application.php:337
-#: ../lib/application.php:395 ../lib/application.php:638
+#: ../lib/application.php:415 ../lib/application.php:684
 msgid "Partner number"
 msgstr "Número de socio"
 
 #: ../lib/application.php:138 ../lib/application.php:336
-#: ../lib/application.php:396 ../lib/application.php:639
+#: ../lib/application.php:416 ../lib/application.php:685
 msgid "Name"
 msgstr "Nombre"
 
 #: ../lib/application.php:139 ../lib/application.php:338
-#: ../lib/application.php:397 ../lib/application.php:640
+#: ../lib/application.php:417 ../lib/application.php:686
 msgid "Telephone"
 msgstr "Teléfono"
 
 #: ../lib/application.php:140 ../lib/application.php:339
-#: ../lib/application.php:398 ../lib/application.php:641
+#: ../lib/application.php:418 ../lib/application.php:687
 msgid "Email"
 msgstr "Email"
 
@@ -167,7 +171,7 @@ msgid "Application Data"
 msgstr "Datos de la solicitud"
 
 #: ../lib/application.php:164 ../lib/application.php:178
-#: ../lib/application.php:599 ../lib/application.php:613
+#: ../lib/application.php:645 ../lib/application.php:659
 msgid "Response"
 msgstr "Responder"
 
@@ -192,66 +196,72 @@ msgstr "Tan pronto como nos sea posible le daremos una respuesta."
 msgid "We have received your appliation"
 msgstr "Hemos recibido su solicitud"
 
-#: ../lib/application.php:399
-msgid "Attach an image/document"
-msgstr ""
-"Adjunte un documento o imagen (Formatos soportados: gif,jpg,jpeg,png,doc,"
-"docx,pdf)"
+#: ../lib/application.php:390
+msgid "Select area"
+msgstr "Seleccione área"
 
-#: ../lib/application.php:400
+#: ../lib/application.php:419
+msgid "Attach an image/document"
+msgstr "Adjunte un documento o imagen"
+
+#: ../lib/application.php:419
+msgid "Supported formats: gif,jpg,jpeg,png,doc,docx,pdf"
+msgstr "Formatos soportados: gif,jpg,jpeg,png,doc,docx,pdf"
+
+#: ../lib/application.php:420
 msgid "Send"
 msgstr "Enviar"
 
-#: ../lib/application.php:586
+#: ../lib/application.php:632
 msgid "Export to CSV"
 msgstr "Exportar a CSV"
 
-#: ../lib/application.php:618
+#: ../lib/application.php:664
 #, php-format
 msgid "Response to your application created at %s"
 msgstr "Respuesta a su solicitud hecha el %s"
 
-#: ../lib/application.php:624
+#: ../lib/application.php:670
 msgid "Response sent correctly"
 msgstr "Respuesta enviada correctamente"
 
-#: ../lib/application.php:629
+#: ../lib/application.php:675
 msgid ""
 "An error occurred while trying to send the email. Please try again later."
 msgstr ""
 "Ocurrió un error al intentar enviar el correo electrónico. Por favor, "
 "intentatelo más tarde."
 
-#: ../lib/application.php:637
+#: ../lib/application.php:683
 msgid "Date"
 msgstr "Fecha"
 
-#: ../lib/application.php:648
+#: ../lib/application.php:694
 msgid "Send response"
 msgstr "Enviar respuesta"
 
-#: ../lib/application.php:689
+#: ../lib/application.php:735
 #, php-format
 msgid "Welcome to our partner attention zone <strong>%s</strong>"
 msgstr "Bienvenido a nuestra zona de atención al socio <strong>%s</strong>"
 
-#: ../lib/application.php:697
+#: ../lib/application.php:743
 msgid "Login to access to Partner attention zone."
 msgstr "Identifícate para poder acceder a la zona de atención al socio."
 
-#: ../lib/application.php:699 ../lib/application.php:700
+#: ../lib/application.php:745 ../lib/application.php:746
 msgid "Parnert number (6 digits)"
 msgstr "Nº de socio (6 dígitos)"
 
-#: ../lib/application.php:703 ../lib/application.php:704
+#: ../lib/application.php:749 ../lib/application.php:750
 msgid "Password"
 msgstr "Contraseña"
 
-#: ../lib/application.php:706
+#: ../lib/application.php:752
 msgid "Login"
 msgstr "Entrar"
 
-#: ../lib/application.php:707
+#: ../lib/application.php:753
 msgid "Remenber password"
 msgstr "Recordar Contraseña"
 

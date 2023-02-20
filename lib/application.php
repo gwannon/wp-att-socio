@@ -361,7 +361,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 		$html .= "<ul>";
 		foreach ($types as $type) {
 			$term_meta = get_option( "taxonomy_".$type->term_id);
-			$html .= "<li id='tab-".$type->term_id."' style='background-image: url(".$term_meta['image'].");'><h3><b>".$type->name.":</b></h3><p>".$type->description."</p><ul>";
+			$html .= "<li id='tab-".$type->term_id."' style='background-image: url(".$term_meta['image'].");'><h3>".$type->name."</h3><button>".$type->description."</button>";
 			$subtypes = get_terms([
 				'taxonomy' => 'type',
 				'hide_empty' => false,
@@ -369,7 +369,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 				'orderby' => 'slug',
 				'order' => 'ASC'
 			]);
-			foreach ($subtypes as $subtype) {
+			/*foreach ($subtypes as $subtype) {
 			
 				$subsubtypes= get_terms([
 					'taxonomy' => 'type',
@@ -378,7 +378,6 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 					'orderby' => 'slug',
 					'order' => 'ASC'
 				]);
-				
 				if(is_array($subsubtypes) && count($subsubtypes) > 0) { 
 					$html .= "<li>".$subtype->name."<ul>";
 					foreach ($subsubtypes as $subsubtype) {
@@ -386,9 +385,30 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 					}
 					$html .= "</ul></li>";
 				} else $html .= "<li><label><input type='radio' name='application_type' value='".$subtype->term_id."'> ".$subtype->name."</label></li>";
-			
+			}*/
+			$html .= "<select name='application_type'>";
+			$html .= "<option value='' selected='true' disabled='disabled'>".__("Select area", 'wp-att-socio')."</option>";
+			foreach ($subtypes as $subtype) {
+				
+				$subsubtypes= get_terms([
+					'taxonomy' => 'type',
+					'hide_empty' => false,
+					'parent' => $subtype->term_id,
+					'orderby' => 'slug',
+					'order' => 'ASC'
+				]);
+				if(is_array($subsubtypes) && count($subsubtypes) > 0) { 
+					$html .= "<optgroup label='".$subtype->name."'>";
+					foreach ($subsubtypes as $subsubtype) {
+						$html .= "<option value='".$subsubtype->term_id."'>".$subsubtype->name."</option>";
+
+					}
+					$html .= "</optgroup>";
+				} else $html .= "<option value='".$subtype->term_id."' style='font-weight: bold;'>".$subtype->name."</option>";
 			}
-			$html .= "</ul></li>";
+			$html .= "</select>";
+
+			$html .= "</li>";
 		}
 		$html .= "</ul>";
 		$html .= "<div><div><label>".__("Application", 'wp-att-socio')."<br/><textarea name='application_text' rows='10'></textarea></label></div>";
@@ -396,7 +416,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 		$html .= "<div><label>".__("Name", 'wp-att-socio')."<br/><input type='text' name='application_partner_name' value='".$datos_sesion['user']['nomabo']." ".$datos_sesion['user']['apeabo']."' required ></label></div>";	
 		$html .= "<div><label>".__("Telephone", 'wp-att-socio')."<br/><input type='text' name='application_partner_phone' required ></label></div>";	
 		$html .= "<div><label>".__("Email", 'wp-att-socio')."<br/><input type='email' name='application_partner_email' required ></label></div>";	
-		$html .= "<div><label>".__("Attach an image/document", 'wp-att-socio')."<br/><input type='file' name='application_partner_file' accept='.gif,.jpg,.jpeg,.png,.doc,.docx,.pdf'></label></div>";				
+		$html .= "<div><label>".__("Attach an image/document", 'wp-att-socio')."<br/><small>".__("Supported formats: gif,jpg,jpeg,png,doc,docx,pdf", 'wp-att-socio')."</small><input type='file' name='application_partner_file' accept='.gif,.jpg,.jpeg,.png,.doc,.docx,.pdf'></label></div>";				
 		$html .= "<br/><input type='submit' name='application_create' value='".__("Send", 'wp-att-socio')."' /></div>";
 		$html .= "</form>";
   }
@@ -420,61 +440,62 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
     border-radius: 10px;
     padding: 20px;
     position: relative;
-    padding-top: 180px;
-    background: #cecece none top center no-repeat;
-    background-size: auto 170px;
+    padding-top: 150px;
+    background: #ffffff none center 28px no-repeat;
+    background-size: 90px auto;
 		box-sizing: border-box;
 	}
 
 	@media (min-width: 600px) {
 		#partner-attention > ul > li {
 			width: calc(33% - 12px);
-			padding-top: 150px;
-			background-size: auto 140px;
 		}
 	}
 
-	#partner-attention > ul > li > ul {
+	#partner-attention > ul > li > h3 {
+		text-align: center;
+		color: #382884;
+		font-weight: 400;
+		text-transform: uppercase;
+		font-size: 24px;
+		line-height: 100%; 
+	}
+
+	#partner-attention > ul > li > p {
+		text-align: center;
+		font-size: 26px;
+		line-height: 120%; 
+	}
+	
+	#partner-attention > ul > li > button {
+    margin: 20px auto 10px;
+    display: block;
+    background-color: #382884;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 100%;
+    border-radius: 30px;
+    padding: 20px;
+	}
+
+	#partner-attention > ul > li > select {
 		display: none;
-		margin: 0px;
+		margin: 20px auto;
+
 	}
 
-	#partner-attention > ul > li.opened {
+	/*#partner-attention > ul > li.opened {
 		background-color: #cecece;
-	}
+	}*/
 
-	#partner-attention > ul > li.opened > ul {
-		display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-		gap: 10px;
-	}
-
-	#partner-attention > ul > li > ul > li {
+	#partner-attention > ul > li.opened > select {
 		display: block;
-    width: calc(50% - 17px);
-    border: 1px solid red;
-    padding: 5px;
-
-	}
-
-	#partner-attention > ul > li > ul > li > ul {
-		margin: 0px;
-	}
-
-	#partner-attention > ul > li > ul > li > ul > li {
-		display: block;
-	}
-
-	#partner-attention li label {
-		cursor: pointer;
 	}
   
 	#partner-attention > div {
 		display: none;
 		margin: auto;
-
 		border: 1px solid #cecece;
 		border-radius: 10px;
 		padding: 20px;
@@ -493,29 +514,27 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 	#partner-attention > div input,
 	#partner-attention > div textarea {
 		width: 100%;
+    margin-bottom: 15px !important;
 	}
 	
   </style>"; 
   $html .= "<script>
 	var current = '';
-  jQuery('#partner-attention > ul > li').click(function(e) {
-		current = jQuery(this).attr('id');
+  jQuery('#partner-attention > ul > li > button').click(function(e) {
+		e.preventDefault();
+		current = jQuery(this).parent().attr('id');
 		jQuery('#partner-attention > ul > li').not('#partner-attention > ul > li#'+current).removeClass('opened');
-		jQuery('#partner-attention > ul > li input[type=radio]').not('#partner-attention > ul > li#'+current+' input[type=radio]').prop('checked', false);
-		jQuery(this).addClass('opened');
+		jQuery('#partner-attention > ul > li > select').not('#partner-attention > ul > li#'+current+' > select').prop('selectedIndex',0);
+		jQuery(this).parent().addClass('opened');
 		jQuery('#partner-attention > div').removeClass('opened');
 	});
 
-	jQuery('#partner-attention input[type=radio]').change(function() {
-		console.log('check');
-		if(jQuery('#partner-attention input[type=radio]:checked').length !== jQuery('#partner-attention input[type=radio]').length) {
-			jQuery('#partner-attention > div').addClass('opened');
-			jQuery('html,body').animate({
-					scrollTop: jQuery('#partner-attention > div').offset().top - 200
-			},'slow');
-		} else {
-			jQuery('#partner-attention > div').removeClass('opened');
-		}
+	jQuery('#partner-attention > ul > li > select').on('change', function (e) {
+		console.log('select');
+		jQuery('#partner-attention > div').addClass('opened');
+		jQuery('html,body').animate({
+				scrollTop: jQuery('#partner-attention > div').offset().top - 200
+		},'slow');
 	});
 
   </script>"; 
@@ -639,19 +658,19 @@ function wp_att_socio_page_settings() {
 
 			$message = file_get_contents(dirname(__FILE__)."/../emails/body.html");
 			$message = str_replace("[MESSAGE]", str_replace("\n", "<br/>", $_REQUEST['_application_response_text']), $message);
-			if(wp_mail(get_post_meta($post->ID, '_application_partner_email', true), "[Atención al socio] ".sprintf(__("Response to your application created at %s", 'wp-a-tu-gusto'), get_the_date("Y-m-d H:i:s", $post->ID)), $message, get_mail_headers())) {
+			if(wp_mail(get_post_meta($post->ID, '_application_partner_email', true), "[Atención al socio] ".sprintf(__("Response to your application created at %s", 'wp-att-socio'), get_the_date("Y-m-d H:i:s", $post->ID)), $message, get_mail_headers())) {
 				update_post_meta($post->ID, '_application_response_text',  str_replace("\n", "<br/>", $_REQUEST['_application_response_text']));
 				update_post_meta($post->ID, '_application_response_date', date("Y-m-d H:i:s"));
 				wp_delete_object_term_relationships($post->ID, 'status');
 				wp_set_object_terms($post->ID, WP_ATT_SOCIO_CLOSED_STATUS, 'status', true);
 				?>
-					<h1 style="border: 1px solid green; color: green; text-align: center; padding: 20px;"><?php _e("Response sent correctly", 'wp-a-tu-gusto'); ?></h1>
-					<a href="<?php echo get_edit_post_link($post->ID); ?>" class="button"><?php _e("View application", 'wp-a-tu-gusto'); ?></a>
+					<h1 style="border: 1px solid green; color: green; text-align: center; padding: 20px;"><?php _e("Response sent correctly", 'wp-att-socio'); ?></h1>
+					<a href="<?php echo get_edit_post_link($post->ID); ?>" class="button"><?php _e("View application", 'wp-att-socio'); ?></a>
 				<?php		
 			} else {
 				?>
-					<h1 style="border: 1px solid green; color: green; text-align: center; padding: 20px;"><?php _e("An error occurred while trying to send the email. Please try again later.", 'wp-a-tu-gusto'); ?></h1>
-					<a href="<?php echo get_edit_post_link($post->ID); ?>" class="button"><?php _e("View application", 'wp-a-tu-gusto'); ?></a>
+					<h1 style="border: 1px solid green; color: green; text-align: center; padding: 20px;"><?php _e("An error occurred while trying to send the email. Please try again later.", 'wp-att-socio'); ?></h1>
+					<a href="<?php echo get_edit_post_link($post->ID); ?>" class="button"><?php _e("View application", 'wp-att-socio'); ?></a>
 				<?php		
 			}
 		} else { ?>
@@ -669,7 +688,7 @@ function wp_att_socio_page_settings() {
 			<form method="post">
 				<input type="hidden" name="application_id" value="<?php echo $post->ID; ?>" />
 				<textarea name="_application_response_text" style="width: 100%;" rows="20" required>Estimado <?php echo get_post_meta($post->ID, '_application_partner_name', true); ?>,&#13;&#10;&#13;&#10;En relación a:&#13;&#10;&#13;&#10;-----&#13;&#10;<?php echo $post->post_content; ?>&#13;&#10;-----&#13;&#10;&#13;&#10;Le podemos decir que:&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;Atentamente,&#13;&#10;La dirección del Real Club Jolaseta</textarea>
-				<input type="submit" name="send" class="button button-primary" value="<?php _e("Send response", 'wp-a-tu-gusto'); ?>" />
+				<input type="submit" name="send" class="button button-primary" value="<?php _e("Send response", 'wp-att-socio'); ?>" />
 			</form>
 		<?php }
 	}
