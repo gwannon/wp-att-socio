@@ -190,19 +190,23 @@ function wp_att_socio_application_custom_column( $column ) {
   global $post;
   if ($column == 'type-application') {
     $terms = get_the_terms( $post->ID, 'type'); 
-		$sorted_terms = sort_terms_hierarchically( $terms );
     $string = array();
-    foreach($sorted_terms as $term) {
-      $string[] = $term->name;
+    if(is_array($terms) && count($terms) > 0) {
+			$sorted_terms = sort_terms_hierarchically( $terms );
+		  foreach($sorted_terms as $term) {
+		    $string[] = $term->name;
+		  }
     }
     if(count($string) > 0) echo implode (", ", $string);
   } else if ($column == 'status-application') {
     $terms = get_the_terms( $post->ID, 'status'); 
-		$sorted_terms = sort_terms_hierarchically( $terms );
-    $string = array();
-    foreach($sorted_terms as $term) {
-      $string[] = $term->name;
-    }
+		$string = array();
+    if(is_array($terms) && count($terms) > 0) {
+			$sorted_terms = sort_terms_hierarchically( $terms );
+		  foreach($sorted_terms as $term) {
+		    $string[] = $term->name;
+		  }
+		}
     if(count($string) > 0) echo implode (", ", $string);
   }
 }
@@ -569,21 +573,25 @@ function wp_att_socio_export_to_csv() {
 			$query->the_post();
 			$post_id = get_the_id();
 			
-		  $terms = get_the_terms($post_id, 'type'); 
-			$sorted_terms = sort_terms_hierarchically( $terms );
+		  $terms = get_the_terms($post_id, 'type');
 		  $string = array();
-		  foreach($sorted_terms as $term) {
-		    $string[] = $term->name;
+		  if(is_array($terms) && count($terms) > 0) {
+		  	$sorted_terms = sort_terms_hierarchically( $terms );
+		  	foreach($sorted_terms as $term) {
+		  	  $string[] = $term->name;
+		  	}
 		  }
 		  if(count($string) > 0) $type = implode (" -> ", $string);
 		  else $type = "";
 
-		  $terms = get_the_terms($post_id, 'status'); 
-			$sorted_terms = sort_terms_hierarchically( $terms );
+		  $terms = get_the_terms($post_id, 'status');
 		  $string = array();
-		  foreach($sorted_terms as $term) {
-		    $string[] = $term->name;
-		  }
+		  if(is_array($terms) && count($terms) > 0) { 
+				$sorted_terms = sort_terms_hierarchically( $terms );
+				foreach($sorted_terms as $term) {
+				  $string[] = $term->name;
+				}
+			}
 		  if(count($string) > 0) $status = implode (" -> ", $string);
 		  else $status = "";
 			
@@ -595,7 +603,7 @@ function wp_att_socio_export_to_csv() {
 				get_post_meta($post_id, '_application_partner_email', true).",\"".
 				addslashes(str_replace("<br/>", "\n", get_the_content($post_id)))."\",".
 				get_post_meta($post_id, '_application_response_date', true).",\"".
-				get_post_meta($post_id, '_application_response_text', true)."\"\n";
+				addslashes(str_replace("<br/>", "\n", get_post_meta($post_id, '_application_response_text', true)))."\"\n";
 
 		}
 		wp_reset_query();
