@@ -1,6 +1,6 @@
 <?php 
 
-ini_set("display_errors", 1);
+//ini_set("display_errors", 1);
 //flush_rewrite_rules(true);
 
 // Activities ----------------------------------------
@@ -183,6 +183,7 @@ function wp_att_socio_show_response() { //Show box
 function wp_att_socio_application_set_custom_edit_columns($columns) {
   $columns['type-application'] = __( 'Type', 'wp-att-socio');
   $columns['status-application'] = __( 'Status', 'wp-att-socio');
+	$columns['closed-date-application'] = __( 'Closed date', 'wp-att-socio');
 	return $columns;
 }
 
@@ -208,7 +209,10 @@ function wp_att_socio_application_custom_column( $column ) {
 		  }
 		}
     if(count($string) > 0) echo implode (", ", $string);
-  }
+  } else if ($column == 'closed-date-application') {
+		echo get_post_meta($post->ID, '_application_response_date', true);
+
+	}
 }
 
 function wp_att_socio_application_type_post_by_taxonomy() {
@@ -288,6 +292,22 @@ if ( is_admin() && 'edit.php' == $pagenow && isset($_GET['post_type']) && 'appli
 }
 
 
+add_action('pre_get_posts', 'wp_att_socio_default_order', 99);
+
+//Orden por defecto de las solicitudes
+function wp_att_socio_default_order($query) {
+	global $pagenow;
+  if ( is_admin() && 'edit.php' == $pagenow && isset($_GET['post_type']) && 'application' == $_GET['post_type']) {
+    if (!isset($_GET['orderby'])) {
+        $query->set('orderby', 'date');
+    }
+    if (!isset($_GET['order'])) {
+        $query->set('order', 'DESC');
+    }
+  }
+}
+
+
 // Códigos cortos --------------------------------------
 function wp_att_socio_shortcode ($params = array(), $content = null) {
   global $post, $datos_sesion;
@@ -345,7 +365,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 				(isset($message_attached_file) ? $message_attached_file : "");
 			$message = file_get_contents(dirname(__FILE__)."/../emails/body.html");
 			$message = str_replace("[MESSAGE]", $email_content, $message);
-			wp_mail($email, "[Atención al socio] ".get_the_title($post_id), $message, get_mail_headers());
+			wp_mail($email, __("[Partner Attention Portal]", 'wp-att-socio')." ".get_the_title($post_id), $message, get_mail_headers());
 		}
 		
   	$html = "<center><h2>".__("Thanks you, your application has been received.", 'wp-att-socio')."</h2><h3>".__("As soon as possible we will send you a response.", 'wp-att-socio')."</h3></center>";
@@ -353,7 +373,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
   	//Mandamos un email al usuario
 		$message = file_get_contents(dirname(__FILE__)."/../emails/body.html");
 		$message = str_replace("[MESSAGE]", "<center><h1>".__("Thanks you, your application has been received.", 'wp-att-socio')."</h1><h2>".__("As soon as possible we will send you a response.", 'wp-att-socio')."<h2></center>", $message);
-		wp_mail(get_post_meta($post_id, '_application_partner_email', true), "[Atención al socio] ".__("We have received your appliation", 'wp-att-socio'), $message, get_mail_headers());
+		wp_mail(get_post_meta($post_id, '_application_partner_email', true), __("[Partner Attention Portal]", 'wp-att-socio')." ".__("We have received your appliation", 'wp-att-socio'), $message, get_mail_headers());
   } else {
 		$types = get_terms([
 		  'taxonomy' => 'type',
@@ -567,7 +587,7 @@ function wp_att_socio_export_to_csv() {
 				'order' => 'DESC'
 		));
 
-		$csv = "Fecha,Tipo,Estado,Nº de socio,Nombre,Teléfono,Email,Asunto,Fecha respuesta,Respuesta\n";
+		$csv = "Fecha,Tipo 1,Tipo2,Tipo 3,Estado 1,Estado 2,Estado 3,Nº de socio,Nombre,Teléfono,Email,Asunto,Fecha respuesta,Respuesta\n";
 
 		while ($query->have_posts()) {
 			$query->the_post();
@@ -581,8 +601,8 @@ function wp_att_socio_export_to_csv() {
 		  	  $string[] = $term->name;
 		  	}
 		  }
-		  if(count($string) > 0) $type = implode (" -> ", $string);
-		  else $type = "";
+			while(count($string) < 3) $string[] = "";
+		  if(count($string) > 0) $type = implode (",", $string);
 
 		  $terms = get_the_terms($post_id, 'status');
 		  $string = array();
@@ -592,8 +612,8 @@ function wp_att_socio_export_to_csv() {
 				  $string[] = $term->name;
 				}
 			}
-		  if(count($string) > 0) $status = implode (" -> ", $string);
-		  else $status = "";
+			while(count($string) < 3) $string[] = "";
+		  if(count($string) > 0) $status = implode (",", $string);
 			
 			
 			$csv .= get_the_date("Y-m-d H:i:s").",".$type.",".$status.",".
@@ -666,7 +686,7 @@ function wp_att_socio_page_settings() {
 
 			$message = file_get_contents(dirname(__FILE__)."/../emails/body.html");
 			$message = str_replace("[MESSAGE]", str_replace("\n", "<br/>", $_REQUEST['_application_response_text']), $message);
-			if(wp_mail(get_post_meta($post->ID, '_application_partner_email', true), "[Atención al socio] ".sprintf(__("Response to your application created at %s", 'wp-att-socio'), get_the_date("Y-m-d H:i:s", $post->ID)), $message, get_mail_headers())) {
+			if(wp_mail(get_post_meta($post->ID, '_application_partner_email', true), __("[Partner Attention Portal]", 'wp-att-socio')." ".sprintf(__("Response to your application created at %s", 'wp-att-socio'), get_the_date("Y-m-d H:i:s", $post->ID)), $message, get_mail_headers())) {
 				update_post_meta($post->ID, '_application_response_text',  str_replace("\n", "<br/>", $_REQUEST['_application_response_text']));
 				update_post_meta($post->ID, '_application_response_date', date("Y-m-d H:i:s"));
 				wp_delete_object_term_relationships($post->ID, 'status');
@@ -695,7 +715,7 @@ function wp_att_socio_page_settings() {
 			
 			<form method="post">
 				<input type="hidden" name="application_id" value="<?php echo $post->ID; ?>" />
-				<textarea name="_application_response_text" style="width: 100%;" rows="20" required>Estimado <?php echo get_post_meta($post->ID, '_application_partner_name', true); ?>,&#13;&#10;&#13;&#10;En relación a:&#13;&#10;&#13;&#10;-----&#13;&#10;<?php echo $post->post_content; ?>&#13;&#10;-----&#13;&#10;&#13;&#10;Le podemos decir que:&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;Atentamente,&#13;&#10;La dirección del Real Club Jolaseta</textarea>
+				<textarea name="_application_response_text" style="width: 100%;" rows="20" required>Estimado/a <?php echo get_post_meta($post->ID, '_application_partner_name', true); ?>,&#13;&#10;&#13;&#10;En relación a:&#13;&#10;&#13;&#10;-----&#13;&#10;<?php echo $post->post_content; ?>&#13;&#10;-----&#13;&#10;&#13;&#10;Le podemos decir que:&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;Atentamente,&#13;&#10;La dirección del Real Club Jolaseta</textarea>
 				<input type="submit" name="send" class="button button-primary" value="<?php _e("Send response", 'wp-att-socio'); ?>" />
 			</form>
 		<?php }
