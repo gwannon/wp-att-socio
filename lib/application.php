@@ -26,12 +26,24 @@ function wp_att_socio_application_create_post_type() {
 		'description'   => __( 'Add new application', 'wp-att-socio' ),
 		'public'        => true,
 		'menu_position' => 7,
-		'taxonomies' 	=> array('type', 'status'),
+		'taxonomies' 		=> array('type', 'status'),
 		'supports'      => array( 'title', 'editor'/*, 'thumbnail', 'page-attributes'*/ ),
 		'rewrite'	      => array( 'slug' => 'application', 'with_front' => false),
 		'query_var'	    => true,
 		'has_archive' 	=> false,
 		'hierarchical'	=> true,
+  	'exclude_from_search' => true,
+  	'capabilities' => array(
+        'publish_posts' => 'publish_applications',
+        'edit_posts' => 'edit_applications',
+        'edit_others_posts' => 'edit_others_applications',
+        'delete_posts' => 'delete_applications',
+        'delete_others_posts' => 'delete_others_applications',
+        'read_private_posts' => 'read_private_applications',
+        'edit_post' => 'edit_applications',
+        'delete_post' => 'delete_applications',
+        'read_post' => 'read_applications'
+		)
 	);
 	register_post_type( 'application', $args );
 }
@@ -60,7 +72,14 @@ function wp_att_socio_application_type_create_type() {
 		'show_in_nav_menus' => false,
 		'has_archive'       => false,
     'rewrite'           => array( 'slug' => 'type', 'with_front' => false),
-    'publicly_queryable' => false
+    'publicly_queryable' => false,
+    'publicly_queryable' => false,
+				'capabilities' => array(
+				'manage_terms' => 'manage_types',
+				'edit_terms' => 'edit_types',
+				'delete_terms' => 'delete_types',
+				'assign_terms' => 'assign_types',
+		)
 	);
   register_taxonomy( 'type', array('application'), $args );
 }
@@ -124,7 +143,13 @@ function wp_att_socio_application_status_create_type() {
 		'show_in_nav_menus' => false,
 		'has_archive'       => false,
     'rewrite'           => array( 'slug' => 'status', 'with_front' => false),
-    'publicly_queryable' => false
+    'publicly_queryable' => false,
+				'capabilities' => array(
+				'manage_terms' => 'manage_status',
+				'edit_terms' => 'edit_status',
+				'delete_terms' => 'delete_status',
+				'assign_terms' => 'assign_status',
+		)
 	);
 	register_taxonomy( 'status', array('application'), $args );
 }
@@ -175,9 +200,17 @@ function wp_att_socio_show_response() { //Show box
   	<div><?php echo get_post_meta($post->ID, '_application_response_text', true); ?></div>
 		<div><b><?php echo apply_filters("the_content", get_post_meta($post->ID, '_application_response_date', true)); ?></b></div>
   <?php } else { ?>
-		<a href="<?php echo get_admin_url(); ?>options-general.php?page=wp-att-socio&application_id=<?php echo $post->ID ?>" class="button"><?php _e('Response', 'wp-att-socio'); ?></a>
+		<a href="<?php echo get_admin_url(); ?>admin.php?page=wp-att-socio&application_id=<?php echo $post->ID ?>" class="button"><?php _e('Response', 'wp-att-socio'); ?></a>
   <?php }
 }
+
+add_action( 'admin_head', function () { ?>
+	<style>
+	#toplevel_page_wp-att-socio {
+		display: none;
+	}
+	</style>
+<?php } );
 
 //Columnas , filtros y ordenaciones ------------------------------------------------
 function wp_att_socio_application_set_custom_edit_columns($columns) {
@@ -331,12 +364,14 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 			'post_content' => $_REQUEST['application_text'],
 			'post_status' => 'publish',
 			'post_type' => 'application',
-			'tax_input' => [
+			/*'tax_input' => [
 				"type" => $types,
 				"status" => [WP_ATT_SOCIO_DEFAULT_STATUS]
-			],
+			],*/
 		);
 		$post_id = wp_insert_post($application);
+		wp_set_post_terms( $post_id, $types, 'type');
+		wp_set_post_terms( $post_id, [WP_ATT_SOCIO_DEFAULT_STATUS], 'status');
 		update_post_meta( $post_id, '_application_partner_number', $_REQUEST['application_partner_number']);
 		update_post_meta( $post_id, '_application_partner_name', $_REQUEST['application_partner_name']);
 		update_post_meta( $post_id, '_application_partner_phone', $_REQUEST['application_partner_phone']);
@@ -365,7 +400,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 				(isset($message_attached_file) ? $message_attached_file : "");
 			$message = file_get_contents(dirname(__FILE__)."/../emails/body.html");
 			$message = str_replace("[MESSAGE]", $email_content, $message);
-			wp_mail($email, __("[Partner Attention Portal]", 'wp-att-socio')." ".get_the_title($post_id), $message, get_mail_headers());
+			wp_mail(trim($email), __("[Partner Attention Portal]", 'wp-att-socio')." ".get_the_title($post_id), $message, get_mail_headers());
 		}
 		
   	$html = "<center><h2>".__("Thanks you, your application has been received.", 'wp-att-socio')."</h2><h3>".__("As soon as possible we will send you a response.", 'wp-att-socio')."</h3></center>";
@@ -667,7 +702,7 @@ add_action('manage_posts_extra_tablenav', function($which) {
 add_filter('page_row_actions', 'wp_att_socio_response_link', 10, 2);
 function wp_att_socio_response_link($actions, $post) {
 	if ($post->post_type =="application" && !has_term( WP_ATT_SOCIO_CLOSED_STATUS, 'status', $post->ID )){
-		$actions['application_response'] = '<a href="'.get_admin_url().'options-general.php?page=wp-att-socio&application_id='.$post->ID.'" class="google_link">' . __('Response', 'wp-att-socio') . '</a>';
+		$actions['application_response'] = '<a href="'.get_admin_url().'admin.php?page=wp-att-socio&application_id='.$post->ID.'" class="google_link">' . __('Response', 'wp-att-socio') . '</a>';
 	}
 	return $actions;
 }
@@ -675,7 +710,7 @@ function wp_att_socio_response_link($actions, $post) {
 
 add_action( 'admin_menu', 'wp_att_socio_plugin_menu' );
 function wp_att_socio_plugin_menu() {
-	add_submenu_page( null, __('Applications', 'wp-att-socio'), __('Applications', 'wp-att-socio'), 'manage_options', 'wp-att-socio', 'wp_att_socio_page_settings');
+	add_menu_page( __('Applications', 'wp-att-socio'), __('Applications', 'wp-att-socio'), 'edit_applications', 'wp-att-socio', 'wp_att_socio_page_settings');
 }
 
 function wp_att_socio_page_settings() { 

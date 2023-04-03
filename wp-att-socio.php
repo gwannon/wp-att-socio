@@ -25,8 +25,8 @@ add_action('plugins_loaded', 'wp_att_socio_plugins_loaded', 0 );
 
 function get_mail_headers() {
   $headers = array(
-    "From: atencionalsocio@jolaseta.com",
-    "Reply-To: atencionalsocio@jolaseta.com",
+    "From: comunicacion@jolaseta.com",
+    "Reply-To: comunicacion@jolaseta.com",
     "Content-type: text/html; charset=utf-8"
   );
   return $headers;

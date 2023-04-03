@@ -25,7 +25,7 @@ function wp_att_socio_show_custom_fields() { //Show box
               <textarea class="_<?php echo $type; ?>_<?php echo $field; ?>" id="_<?php echo $type; ?>_<?php echo $field; ?>" style="width: 100%;" rows="5" name="_<?php echo $type; ?>_<?php echo $field; ?>"<?php echo (isset($datos['placeholder']) ? " placeholder='".$datos['placeholder']."'" : "" ); ?>><?php echo get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?></textarea>
             <?php } else if($datos['tipo'] == 'hidden') { ?>
               <input disabled="disabled" type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>" id="_<?php echo $type; ?>_<?php echo $field; ?>" style="width: 50%;" name="_<?php echo $type; ?>_<?php echo $field; ?>" value="<?php echo get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?>" />
-            <?php } else if($datos['tipo'] == 'imageview') { ?>
+            <?php } else if($datos['tipo'] == 'imageview' && get_post_meta( $post->ID, '_'.$type.'_'.$field, true ) != '') { ?>
               <a href="<?php echo get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?>" target="_blank"><?php _e("View file", 'wp-att-socio'); ?></a>
             <?php } else if($datos['tipo'] == 'image') { ?>
               <input type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>" id="input_<?php echo $type; ?>_<?php echo $field; ?>" style="width: 80%;" name="_<?php echo $type; ?>_<?php echo $field; ?>" value='<?php echo get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?>' />
