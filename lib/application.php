@@ -196,7 +196,10 @@ add_action('add_meta_boxes', 'wp_att_socio_application_response');
 
 function wp_att_socio_show_response() { //Show box
   global $post;
-  if (has_term( WP_ATT_SOCIO_CLOSED_STATUS, 'status', $post->ID )){ ?>
+  $terms = [WP_ATT_SOCIO_CLOSED_STATUS];
+  foreach(get_term_children( WP_ATT_SOCIO_CLOSED_STATUS, 'status', 'status' ) as $term) $terms[] = $term->term_id;
+  
+  if (has_term($term, 'status', $post->ID )){ ?>
   	<div><?php echo get_post_meta($post->ID, '_application_response_text', true); ?></div>
 		<div><b><?php echo apply_filters("the_content", get_post_meta($post->ID, '_application_response_date', true)); ?></b></div>
   <?php } else { ?>
