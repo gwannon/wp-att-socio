@@ -3,7 +3,7 @@
 //ini_set("display_errors", 1);
 //flush_rewrite_rules(true);
 
-// Activities ----------------------------------------
+// Applications ----------------------------------------
 // ------------------------------------------------
 add_action( 'init', 'wp_att_socio_application_create_post_type' );
 function wp_att_socio_application_create_post_type() {

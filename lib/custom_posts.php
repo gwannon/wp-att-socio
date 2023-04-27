@@ -2,6 +2,8 @@
 
 function wp_att_socio_get_custom_fields ($type) {
   if($type == 'application') return wp_att_socio_get_application_custom_fields();
+  else if($type == 'survey') return wp_att_socio_get_survey_custom_fields();
+  else if($type == 'question') return wp_att_socio_get_question_custom_fields();
 }
 
 function wp_att_socio_show_custom_fields() { //Show box

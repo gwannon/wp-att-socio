@@ -14,8 +14,9 @@
  * PHP 7.3
  * WordPress 6.1.1
  */
- 
-//ini_set("display_errors", 1);
+
+
+ini_set("display_errors", 1);
 
 //Cargamos el multi-idioma
 function wp_att_socio_plugins_loaded() {
@@ -40,6 +41,7 @@ add_action('wp_enqueue_scripts', 'wp_att_socio_load_scripts');
 /* ----------- Includes ------------ */
 include_once(plugin_dir_path(__FILE__).'lib/custom_posts.php');
 include_once(plugin_dir_path(__FILE__).'lib/application.php');
+include_once(plugin_dir_path(__FILE__).'lib/survey.php');
 
 /* ---------- Globals ---------------- */
 define('WP_ATT_SOCIO_DEFAULT_STATUS', 104);
