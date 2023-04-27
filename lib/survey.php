@@ -48,7 +48,10 @@ function wp_att_socio_survey_create_post_survey() {
 function wp_att_socio_get_survey_custom_fields() {
 	global $post;
 	$fields = array(
-		'status' => array ('titulo' => __( 'Status', 'wp-att-socio' ), 'tipo' => 'checkbox'),
+		'status' => array ('titulo' => __( 'Status', 'wp-att-socio' ), 'tipo' => 'select', 'valores' => [
+      "1" => "Abierto",
+      "2" => "Cerrado"
+    ]),
 	);
 	return $fields;
 }
@@ -109,3 +112,27 @@ function wp_att_socio_survey_create_post_question() {
 	);
 	register_post_type( 'question', $args );
 }
+
+
+//CAMPOS personalizados
+function wp_att_socio_get_question_custom_fields() {
+	global $post;
+	$fields = array(
+    'options' => array ('titulo' => __( "Options", 'wp-att-socio' ), 'tipo' => 'repeater', "min" => 2, "max => 10", "fields" => array (
+      'option' => array ('titulo' => __( "Text", 'bideurdin' ), 'tipo' => 'text')
+    )),
+	);
+	return $fields;
+}
+
+function wp_att_socio_question_add_custom_fields() {
+  add_meta_box(
+    'box_activities', // $id
+    __('Question Data', 'wp-att-socio'), // $title 
+    'wp_att_socio_show_custom_fields', // $callback
+    'question', // $page
+    'normal', // $context
+    'high'); // $priority
+}
+add_action('add_meta_boxes', 'wp_att_socio_question_add_custom_fields');
+add_action('save_post', 'wp_att_socio_save_custom_fields' );

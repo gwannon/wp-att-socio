@@ -113,7 +113,7 @@ function wp_att_socio_show_custom_fields() { //Show box
               </div>
               <div id="_<?php echo $type; ?>_<?php echo $field; ?>_map" style="width: 100%; height: 350px;"></div>
               <input  type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>" id="_<?php echo $type; ?>_<?php echo $field; ?>" style="width: 100%;" name="_<?php echo $type; ?>_<?php echo $field; ?>" value="<?php echo get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?>" />
-          <?php } else if ($datos['tipo'] == 'repeater') { $rest = get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); if(isset($datos['min'])) $min = $datos['min']; else $min = 6; if(isset($datos['max'])) $max = $datos['max']; else $max = (count($rest) < $min ? $min : (count($rest) + 1)); ?>
+          <?php } else if ($datos['tipo'] == 'repeater') { $rest = get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); if(isset($datos['min'])) $min = $datos['min']; else $min = 6; if(isset($datos['max'])) $max = $datos['max']; else $max = (is_array($rest) && count($rest) < $min ? $min : (count($rest) + 1)); ?>
             <style>
               .repeater {
                 display: flex;
@@ -188,7 +188,7 @@ function wp_att_socio_show_custom_fields() { //Show box
                           <?php } ?>	
                         </select>
                       <?php } else { ?>
-                        <input  type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" id="_<?php echo $type; ?>_<?php echo $field; ?>_<?php echo $i; ?>_<?php echo $key; ?>" style="width: 100%;" name="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" value="<?php echo $rest[$i][$key]; ?>" placeholder="<?php echo $subfields['titulo']; ?>" />
+                        <input  type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" id="_<?php echo $type; ?>_<?php echo $field; ?>_<?php echo $i; ?>_<?php echo $key; ?>" style="width: 100%;" name="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" value="<?php echo (isset($rest[$i][$key]) ? $rest[$i][$key] : ""); ?>" placeholder="<?php echo $subfields['titulo']; ?>" />
                       <?php } ?>
                     <?php } ?>
                     
@@ -233,7 +233,7 @@ function wp_att_socio_save_custom_fields( $post_id ) { //Save changes
 function wp_att_socio_array_remove_empty($haystack) {
   foreach ($haystack as $key => $value) {
     if (is_array($value)) {
-      $haystack[$key] = array_remove_empty($haystack[$key]);
+      $haystack[$key] =  wp_att_socio_array_remove_empty($haystack[$key]);
     }
     if (empty($haystack[$key])) {
         unset($haystack[$key]);
