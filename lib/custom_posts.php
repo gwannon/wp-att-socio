@@ -53,10 +53,10 @@ function wp_att_socio_show_custom_fields() { //Show box
                   <option value="<?php echo $key; ?>"<?php if ($key == get_post_meta( $post->ID, '_'.$type.'_'.$field, true )) echo " selected='selected'"; ?>><?php echo $value; ?></option>
                 <?php } ?>	
               </select>
-            <?php } else if ($datos['tipo'] == 'multiple') {  ?>
+            <?php } else if ($datos['tipo'] == 'multiple') { $post_meta = get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?>
               <select name="_<?php echo $type; ?>_<?php echo $field; ?>[]" multiple="multiple" style="width: 100%;">
                 <?php foreach($datos['valores'] as $key => $value) { ?>
-                  <option value="<?php echo $key; ?>"<?php if (in_array($key, get_post_meta( $post->ID, '_'.$type.'_'.$field, true ))) echo " selected='selected'"; ?>><?php echo $value; ?></option>
+                  <option value="<?php echo $key; ?>"<?php if (is_array($post_meta) && in_array($key, $post_meta)) echo " selected='selected'"; ?>><?php echo $value; ?></option>
                 <?php } ?>	
               </select>
             <?php } else if ($datos['tipo'] == 'checkbox') { ?>
@@ -113,7 +113,17 @@ function wp_att_socio_show_custom_fields() { //Show box
               </div>
               <div id="_<?php echo $type; ?>_<?php echo $field; ?>_map" style="width: 100%; height: 350px;"></div>
               <input  type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>" id="_<?php echo $type; ?>_<?php echo $field; ?>" style="width: 100%;" name="_<?php echo $type; ?>_<?php echo $field; ?>" value="<?php echo get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); ?>" />
-          <?php } else if ($datos['tipo'] == 'repeater') { $rest = get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); if(isset($datos['min'])) $min = $datos['min']; else $min = 6; if(isset($datos['max'])) $max = $datos['max']; else $max = (is_array($rest) && count($rest) < $min ? $min : (count($rest) + 1)); ?>
+          <?php } else if ($datos['tipo'] == 'repeater') { 
+            $rest = get_post_meta( $post->ID, '_'.$type.'_'.$field, true ); 
+            if(isset($datos['min'])) $min = $datos['min']; else $min = 6; 
+            if(isset($datos['max'])) $max = $datos['max']; 
+            else {
+              if(is_array($rest)) {
+                $max = (count($rest) < $min ? $min : (count($rest) + 1));
+              } else {
+                $max = 2;
+              }
+            } ?>
             <style>
               .repeater {
                 display: flex;
@@ -196,7 +206,7 @@ function wp_att_socio_show_custom_fields() { //Show box
                   
                 <?php } ?>
               </div>
-              <hr style="margin: 10px 0px;"/>
+              <!-- <hr style="margin: 10px 0px;"/> -->
             <?php } ?>
           </div>
         <?php } ?>
@@ -233,7 +243,19 @@ function wp_att_socio_save_custom_fields( $post_id ) { //Save changes
 function wp_att_socio_array_remove_empty($haystack) {
   foreach ($haystack as $key => $value) {
     if (is_array($value)) {
-      $haystack[$key] =  wp_att_socio_array_remove_empty($haystack[$key]);
+      $haystack[$key] = array_remove_empty($haystack[$key]);
+    }
+    if (empty($haystack[$key])) {
+        unset($haystack[$key]);
+    }
+  }
+  return $haystack;
+}
+
+function array_remove_empty($haystack) {
+  foreach ($haystack as $key => $value) {
+    if (is_array($value)) {
+      $haystack[$key] = array_remove_empty($haystack[$key]);
     }
     if (empty($haystack[$key])) {
         unset($haystack[$key]);

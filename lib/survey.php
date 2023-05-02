@@ -44,13 +44,70 @@ function wp_att_socio_survey_create_post_survey() {
 	register_post_type( 'survey', $args );
 }
 
+//Columnas , filtros y ordenaciones ------------------------------------------------
+function wp_att_socio_survey_set_custom_edit_columns($columns) {
+  $columns['status'] = __( 'Status', 'wp-att-socio');
+  $columns['questions'] = __( 'Questions', 'wp-att-socio');
+	unset($columns['date']);
+	$columns['date'] = __( 'Date');
+	return $columns;
+}
+
+function wp_att_socio_survey_custom_column( $column ) {
+  global $post;
+	$temp = $post;
+	if ($column == 'questions') {
+		$args = array(
+			'post_type' => 'question',
+			'orderby' => 'menu_order',
+			'meta_query' => array(
+					array(
+							'key' => '_question_survey',
+							'value' => $post->ID,
+							'compare' => '=',
+					)
+			)
+		);
+		//echo "<pre>"; print_r($args); echo "</pre>";
+		$the_query = new WP_Query($args);
+		if ($the_query->have_posts() ) {
+			echo "<ol>";
+			while ( $the_query->have_posts() ) { 
+				$the_query->the_post();
+				echo "<li><b>".get_the_title()."</b><br/><a href='".get_edit_post_link()."'>".__("Edit question", 'wp-att-socio')."</a></li>";
+			}
+			echo "</ol>";
+		} else echo "<span style='color: red;'>".__("No questions associated", 'wp-att-socio')."</span>";
+		wp_reset_query();
+	} else if ($column == 'status') {
+		//echo $post->ID."----".get_post_meta( $post->ID, '_survey_status', true );
+		if(get_post_meta( $post->ID, '_survey_status', true ) == 1) echo "<span style='display: inline-block; padding: 10px; background-color: green; color: #fff;'>".__('Open', 'wp-att-socio' )."</span>"; 
+		else echo "<span style='display: inline-block; padding: 10px; background-color: red; color: #fff;'>".__('Closed', 'wp-att-socio' )."</span>"; 
+  }
+	$psot = $temp;
+}
+
+
+//Los hooks si estamos en el admin 
+if ( is_admin() && 'edit.php' == $pagenow && isset($_GET['post_type']) && 'survey' == $_GET['post_type'] ) {
+  add_filter( 'manage_edit-survey_columns', 'wp_att_socio_survey_set_custom_edit_columns' ); //Metemos columnas
+  add_action( 'manage_survey_posts_custom_column' , 'wp_att_socio_survey_custom_column', 'category' ); //Metemos columnas
+
+  /*add_action( 'restrict_manage_posts', 'wp_att_socio_application_type_post_by_taxonomy' ); //Añadimos filtro tipo
+  add_filter( 'parse_query', 'wp_att_socio_application_type_id_to_term_in_query' ); //Añadimos filtro tipo
+  add_action( 'restrict_manage_posts', 'wp_att_socio_application_status_post_by_taxonomy' ); //Añadimos filtro marca
+  add_filter( 'parse_query', 'wp_att_socio_application_status_id_to_term_in_query' ); //Añadimos filtro marca*/
+  
+	add_filter( 'months_dropdown_results', '__return_empty_array' ); //Quitamos el filtro de fechas en el admin
+}
+
 //CAMPOS personalizados
 function wp_att_socio_get_survey_custom_fields() {
 	global $post;
 	$fields = array(
 		'status' => array ('titulo' => __( 'Status', 'wp-att-socio' ), 'tipo' => 'select', 'valores' => [
-      "1" => "Abierto",
-      "2" => "Cerrado"
+      "1" => __('Open', 'wp-att-socio' ),
+      "2" => __('Closed', 'wp-att-socio' )
     ]),
 	);
 	return $fields;
@@ -113,17 +170,68 @@ function wp_att_socio_survey_create_post_question() {
 	register_post_type( 'question', $args );
 }
 
+//Columnas , filtros y ordenaciones ------------------------------------------------
+function wp_att_socio_question_set_custom_edit_columns($columns) {
+  $columns['survey'] = __( 'Survey', 'wp-att-socio');
+	unset($columns['date']);
+	return $columns;
+}
+
+function wp_att_socio_question_custom_column( $column ) {
+  global $post;
+  if ($column == 'survey') {
+    $survey_id = get_post_meta( $post->ID, '_question_survey', true );
+		if($survey_id > 0) echo "<b>".get_the_title($survey_id)."</b><br/><a href='".get_edit_post_link($survey_id)."'>".__("Edit survey", 'wp-att-socio')."</a>";
+		else echo "<span style='color: red;'>".__("No survey associated", 'wp-att-socio')."</span>";
+  }
+}
+
+//Los hooks si estamos en el admin 
+if ( is_admin() && 'edit.php' == $pagenow && isset($_GET['post_type']) && 'question' == $_GET['post_type'] ) {
+  add_filter( 'manage_edit-question_columns', 'wp_att_socio_question_set_custom_edit_columns' ); //Metemos columnas
+  add_action( 'manage_question_posts_custom_column' , 'wp_att_socio_question_custom_column', 'category' ); //Metemos columnas
+
+  /*add_action( 'restrict_manage_posts', 'wp_att_socio_application_type_post_by_taxonomy' ); //Añadimos filtro tipo
+  add_filter( 'parse_query', 'wp_att_socio_application_type_id_to_term_in_query' ); //Añadimos filtro tipo
+  add_action( 'restrict_manage_posts', 'wp_att_socio_application_status_post_by_taxonomy' ); //Añadimos filtro marca
+  add_filter( 'parse_query', 'wp_att_socio_application_status_id_to_term_in_query' ); //Añadimos filtro marca*/
+  
+	add_filter( 'months_dropdown_results', '__return_empty_array' ); //Quitamos el filtro de fechas en el admin
+}
+
 
 //CAMPOS personalizados
 function wp_att_socio_get_question_custom_fields() {
 	global $post;
 	$fields = array(
     'options' => array ('titulo' => __( "Options", 'wp-att-socio' ), 'tipo' => 'repeater', "min" => 2, "max => 10", "fields" => array (
-      'option' => array ('titulo' => __( "Text", 'bideurdin' ), 'tipo' => 'text')
+      'option' => array ('titulo' => __( "Text", 'wp-att-socio' ), 'tipo' => 'text')
     )),
+		'survey' => array ('titulo' => __( 'Survey', 'wp-att-socio' ), 'tipo' => 'select', "valores" => wp_att_socio_question_custom_fields_relatedsurveys()),
+
+
 	);
 	return $fields;
 }
+
+function wp_att_socio_question_custom_fields_relatedsurveys () {
+	$surveys = array();
+	$surveys[0] = __("Select survey", 'wp-att-socio');
+  $args = array(
+		'post_type' => 'survey',
+		'posts_per_page' => -1,
+		//'post_status' => 'publish,draft',
+		'order' => 'ASC',
+		//'post__not_in' => array(get_the_id()),
+		'orderby' => 'meta_value_num post_title',  
+	);
+	foreach ( get_posts($args) as $post ) { 
+		$id = $post->ID;
+		$surveys[$id] = get_the_title($id);
+	}
+  return $surveys;
+}
+
 
 function wp_att_socio_question_add_custom_fields() {
   add_meta_box(
