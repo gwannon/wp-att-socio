@@ -565,7 +565,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 
 		if ( current_user_can( 'manage_options' ) ) {
 
-			$html .= "<li id='tab-survey' style='background-image: url(/wp-content/plugins/wp-att-socio/assets/images/reclamacion.svg);'><h3>".__("Surveys", 'wp-att-socio')."</h3><button>".__("Answer surveys", 'wp-att-socio')."</button>";
+			$html .= "<li id='tab-survey' style='background-image: url(/wp-content/plugins/wp-att-socio/assets/images/encuesta.svg);'><h3>".__("Surveys", 'wp-att-socio')."</h3><button>".__("Answer surveys", 'wp-att-socio')."</button>";
 		
 
 			$html .= "<select name='survey_type'>";
