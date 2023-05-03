@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ac-update-forms\n"
-"POT-Creation-Date: 2023-02-23 11:17+0100\n"
-"PO-Revision-Date: 2023-02-23 11:17+0100\n"
+"POT-Creation-Date: 2023-05-03 10:29+0200\n"
+"PO-Revision-Date: 2023-05-03 10:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: jorge@enutt.net\n"
 "Language: es_ES\n"
@@ -16,15 +16,15 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../lib/application.php:11 ../lib/application.php:22
-#: ../lib/application.php:675
+#: ../lib/application.php:924
 msgid "Applications"
 msgstr "Solicitudes"
 
-#: ../lib/application.php:12 ../lib/application.php:435
+#: ../lib/application.php:12 ../lib/application.php:586
 msgid "Application"
 msgstr "Solicitud"
 
-#: ../lib/application.php:13
+#: ../lib/application.php:13 ../lib/survey.php:10 ../lib/survey.php:136
 msgid "Add new"
 msgstr "Anadir nueva"
 
@@ -44,8 +44,8 @@ msgstr "Nueva solicitud"
 msgid "All applications"
 msgstr "Todas las solicitudes"
 
-#: ../lib/application.php:18 ../lib/application.php:361
-#: ../lib/application.php:693 ../lib/application.php:698
+#: ../lib/application.php:18 ../lib/application.php:402
+#: ../lib/application.php:942 ../lib/application.php:947
 msgid "View application"
 msgstr "Ver solicitud"
 
@@ -61,242 +61,387 @@ msgstr "Solicitud no encontrada"
 msgid "Application not found in trash bin"
 msgstr "Solicitud no encontrada en la papelera"
 
-#: ../lib/application.php:43 ../lib/application.php:53
+#: ../lib/application.php:55 ../lib/application.php:65
 msgid "Types"
 msgstr "Tipos de solicitudes"
 
-#: ../lib/application.php:44 ../lib/application.php:184
+#: ../lib/application.php:56 ../lib/application.php:220
 msgid "Type"
 msgstr "Tipo de solicitud"
 
-#: ../lib/application.php:45
+#: ../lib/application.php:57
 msgid "Search type"
 msgstr "Buscar tipo de solicitud"
 
-#: ../lib/application.php:46
+#: ../lib/application.php:58
 msgid "All types"
 msgstr "Todos los tipos de solicitud"
 
-#: ../lib/application.php:47 ../lib/application.php:48
+#: ../lib/application.php:59 ../lib/application.php:60
 msgid "Parent type"
 msgstr ""
 
-#: ../lib/application.php:49
+#: ../lib/application.php:61
 msgid "Edit type"
 msgstr "Editar tipo de solicitud"
 
-#: ../lib/application.php:50
+#: ../lib/application.php:62
 msgid "Update type"
 msgstr "Actualizar tipo de solicitud"
 
-#: ../lib/application.php:51
+#: ../lib/application.php:63
 msgid "Add type"
 msgstr "Añadir tipo de solicitud"
 
-#: ../lib/application.php:52
+#: ../lib/application.php:64
 msgid "New type"
 msgstr "Nuevo tipo de solicitud"
 
-#: ../lib/application.php:72
+#: ../lib/application.php:91
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
-#: ../lib/application.php:78
+#: ../lib/application.php:97
 msgid "Contact emails (separated by commas)"
 msgstr "Emails de contacto (Separados por comas)"
 
-#: ../lib/application.php:107 ../lib/application.php:108
-#: ../lib/application.php:117 ../lib/application.php:185
+#: ../lib/application.php:126 ../lib/application.php:127
+#: ../lib/application.php:136 ../lib/application.php:221 ../lib/survey.php:49
+#: ../lib/survey.php:108
 msgid "Status"
 msgstr "Estado"
 
-#: ../lib/application.php:109
+#: ../lib/application.php:128
 msgid "Search status"
-msgstr "Bucar estado"
+msgstr "Buscar estado"
 
-#: ../lib/application.php:110
+#: ../lib/application.php:129
 msgid "All status"
 msgstr "Todos los estados"
 
-#: ../lib/application.php:111 ../lib/application.php:112
+#: ../lib/application.php:130 ../lib/application.php:131
 msgid "Parent status"
 msgstr ""
 
-#: ../lib/application.php:113
+#: ../lib/application.php:132
 msgid "Edit status"
 msgstr "Editar estado"
 
-#: ../lib/application.php:114
+#: ../lib/application.php:133
 msgid "Update status"
 msgstr "Actualizar estado"
 
-#: ../lib/application.php:115
+#: ../lib/application.php:134
 msgid "Add status"
 msgstr "Añadir estado"
 
-#: ../lib/application.php:116
+#: ../lib/application.php:135
 msgid "New status"
 msgstr "Nuevo estado"
 
-#: ../lib/application.php:137 ../lib/application.php:358
-#: ../lib/application.php:436 ../lib/application.php:706
+#: ../lib/application.php:162 ../lib/application.php:399
+#: ../lib/application.php:587 ../lib/application.php:955
 msgid "Partner number"
 msgstr "Número de socio"
 
-#: ../lib/application.php:138 ../lib/application.php:357
-#: ../lib/application.php:437 ../lib/application.php:707
+#: ../lib/application.php:163 ../lib/application.php:398
+#: ../lib/application.php:588 ../lib/application.php:956
 msgid "Name"
 msgstr "Nombre"
 
-#: ../lib/application.php:139 ../lib/application.php:359
-#: ../lib/application.php:438 ../lib/application.php:708
+#: ../lib/application.php:164 ../lib/application.php:400
+#: ../lib/application.php:589 ../lib/application.php:957
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: ../lib/application.php:140 ../lib/application.php:360
-#: ../lib/application.php:439 ../lib/application.php:709
+#: ../lib/application.php:165 ../lib/application.php:401
+#: ../lib/application.php:590 ../lib/application.php:958
 msgid "Email"
 msgstr "Email"
 
-#: ../lib/application.php:141
+#: ../lib/application.php:166
 msgid "Notes"
 msgstr "Notas"
 
-#: ../lib/application.php:142 ../lib/application.php:350
+#: ../lib/application.php:167 ../lib/application.php:391
 msgid "Attached File"
 msgstr "Archivo adjunto"
 
-#: ../lib/application.php:150
+#: ../lib/application.php:175
 msgid "Application Data"
 msgstr "Datos de la solicitud"
 
-#: ../lib/application.php:164 ../lib/application.php:178
-#: ../lib/application.php:667 ../lib/application.php:681
+#: ../lib/application.php:189 ../lib/application.php:206
+#: ../lib/application.php:916 ../lib/application.php:930
 msgid "Response"
 msgstr "Responder"
 
-#: ../lib/application.php:186
+#: ../lib/application.php:222
 msgid "Closed date"
 msgstr "Fecha de cerrado"
 
-#: ../lib/application.php:224 ../lib/application.php:255
+#: ../lib/application.php:263 ../lib/application.php:294
 msgid "Show all"
 msgstr "Mostrar todo"
 
-#: ../lib/application.php:327
+#: ../lib/application.php:366
 #, php-format
 msgid "%s %s %s submitted by %s (%s)"
 msgstr "%s %s %s enviado por %s (%s)"
 
-#: ../lib/application.php:365 ../lib/application.php:373
-#: ../lib/application.php:686
+#: ../lib/application.php:406 ../lib/application.php:414
+#: ../lib/application.php:935
 msgid "[Partner Attention Portal]"
 msgstr "[Portal de Atención al socio]"
 
-#: ../lib/application.php:368 ../lib/application.php:372
+#: ../lib/application.php:409 ../lib/application.php:413
 msgid "Thanks you, your application has been received."
 msgstr "Gracias, su solicitud ha sido recibida."
 
-#: ../lib/application.php:368 ../lib/application.php:372
+#: ../lib/application.php:409 ../lib/application.php:413
 msgid "As soon as possible we will send you a response."
 msgstr "Tan pronto como nos sea posible le daremos una respuesta."
 
-#: ../lib/application.php:373
+#: ../lib/application.php:414
 msgid "We have received your appliation"
 msgstr "Hemos recibido su solicitud"
 
-#: ../lib/application.php:411
+#: ../lib/application.php:452
+msgid "Thanks you, your answers has been received."
+msgstr "Gracias, su encuesta ha sido recibida."
+
+#: ../lib/application.php:454
+msgid ""
+"Sorry, you have already participated in this survey or the survey is closed."
+msgstr ""
+"Lo sentimos, pero la encuesta ya está cerrada o ya ha participadpo en esta "
+"encuesta. "
+
+#: ../lib/application.php:492 ../lib/application.php:642
+#, php-format
+msgid "<b>Total:</b> %d votes"
+msgstr "<b>Total:</b> %d votos"
+
+#: ../lib/application.php:542
 msgid "Select area"
 msgstr "Seleccione área"
 
-#: ../lib/application.php:440
+#: ../lib/application.php:568 ../lib/survey.php:8 ../lib/survey.php:19
+msgid "Surveys"
+msgstr "Encuestas"
+
+#: ../lib/application.php:568
+msgid "Answer surveys"
+msgstr "Responder encuestas"
+
+#: ../lib/application.php:572 ../lib/survey.php:220
+msgid "Select survey"
+msgstr "Seleccione encuesta"
+
+#: ../lib/application.php:575 ../lib/survey.php:84 ../lib/survey.php:109
+msgid "Open"
+msgstr "Abierta"
+
+#: ../lib/application.php:575 ../lib/survey.php:85 ../lib/survey.php:110
+msgid "Closed"
+msgstr "Cerrada"
+
+#: ../lib/application.php:591
 msgid "Attach an image/document"
 msgstr "Adjunte un documento o imagen"
 
-#: ../lib/application.php:440
+#: ../lib/application.php:591
 msgid "Supported formats: gif,jpg,jpeg,png,doc,docx,pdf"
 msgstr "Formatos soportados: gif,jpg,jpeg,png,doc,docx,pdf"
 
-#: ../lib/application.php:441
+#: ../lib/application.php:592
 msgid "Send"
 msgstr "Enviar"
 
-#: ../lib/application.php:654
+#: ../lib/application.php:651
+msgid "Send survey"
+msgstr "Enviar encuesta"
+
+#: ../lib/application.php:903
 msgid "Export to CSV"
 msgstr "Exportar a CSV"
 
-#: ../lib/application.php:686
+#: ../lib/application.php:935
 #, php-format
 msgid "Response to your application created at %s"
 msgstr "Respuesta a su solicitud hecha el %s"
 
-#: ../lib/application.php:692
+#: ../lib/application.php:941
 msgid "Response sent correctly"
 msgstr "Respuesta enviada correctamente"
 
-#: ../lib/application.php:697
+#: ../lib/application.php:946
 msgid ""
 "An error occurred while trying to send the email. Please try again later."
 msgstr ""
 "Ocurrió un error al intentar enviar el correo electrónico. Por favor, "
 "intentatelo más tarde."
 
-#: ../lib/application.php:705
+#: ../lib/application.php:954 ../lib/survey.php:52
 msgid "Date"
 msgstr "Fecha"
 
-#: ../lib/application.php:716
+#: ../lib/application.php:965
 msgid "Send response"
 msgstr "Enviar respuesta"
 
-#: ../lib/application.php:757
+#: ../lib/application.php:1006
 #, php-format
 msgid "Welcome to our partner attention zone <strong>%s</strong>"
 msgstr "Bienvenido/a a nuestro portal de atención al socio <strong>%s</strong>"
 
-#: ../lib/application.php:765
+#: ../lib/application.php:1014
 msgid "Login to access to Partner attention zone."
 msgstr "Identifícate para poder acceder a la zona de atención al socio."
 
-#: ../lib/application.php:767 ../lib/application.php:768
+#: ../lib/application.php:1016 ../lib/application.php:1017
 msgid "Parnert number (6 digits)"
 msgstr "Nº de socio (6 dígitos)"
 
-#: ../lib/application.php:771 ../lib/application.php:772
+#: ../lib/application.php:1020 ../lib/application.php:1021
 msgid "Password"
 msgstr "Contraseña"
 
-#: ../lib/application.php:774
+#: ../lib/application.php:1023
 msgid "Login"
 msgstr "Entrar"
 
-#: ../lib/application.php:775
+#: ../lib/application.php:1024
 msgid "Remenber password"
 msgstr "Recordar Contraseña"
 
-#: ../lib/custom_posts.php:29
+#: ../lib/custom_posts.php:31
 msgid "View file"
 msgstr "Ver fichero"
 
-#: ../lib/custom_posts.php:32 ../lib/custom_posts.php:168
+#: ../lib/custom_posts.php:34 ../lib/custom_posts.php:180
 msgid "Add file"
 msgstr "Añadir fichero"
 
-#: ../lib/custom_posts.php:84
+#: ../lib/custom_posts.php:86
 msgid "Drag and drop"
-msgstr ""
+msgstr "Arrastrar y soltar"
 
-#: ../lib/custom_posts.php:109
+#: ../lib/custom_posts.php:111
 msgid "Write here the location"
-msgstr ""
+msgstr "Escribe aquí la localización"
 
-#: ../lib/custom_posts.php:110
+#: ../lib/custom_posts.php:112
 msgid "Search location"
-msgstr ""
+msgstr "Buscar localización"
 
-#: ../lib/custom_posts.php:145
+#: ../lib/custom_posts.php:157
 msgid "Add image"
-msgstr ""
+msgstr "Añadir imagen"
+
+#: ../lib/survey.php:9 ../lib/survey.php:175 ../lib/survey.php:211
+msgid "Survey"
+msgstr "Encuesta"
+
+#: ../lib/survey.php:11 ../lib/survey.php:23
+msgid "Add new survey"
+msgstr "Añadir nueva encuesta"
+
+#: ../lib/survey.php:12 ../lib/survey.php:184
+msgid "Edit survey"
+msgstr "Editar encuesta"
+
+#: ../lib/survey.php:13
+msgid "New survey"
+msgstr "Nueva encuesta"
+
+#: ../lib/survey.php:14
+msgid "All surveys"
+msgstr "Todos las encuestas"
+
+#: ../lib/survey.php:15
+msgid "View survey"
+msgstr "Ver encuesta"
+
+#: ../lib/survey.php:16
+msgid "Search survey"
+msgstr "Buscar encuesta"
+
+#: ../lib/survey.php:17
+msgid "Survey not found"
+msgstr "Encuesta no encontrada"
+
+#: ../lib/survey.php:18
+msgid "Survey not found in trash bin"
+msgstr "Encuesta no encontrada en la papelera"
+
+#: ../lib/survey.php:50 ../lib/survey.php:134 ../lib/survey.php:145
+msgid "Questions"
+msgstr "Preguntas"
+
+#: ../lib/survey.php:77 ../lib/survey.php:138
+msgid "Edit question"
+msgstr "Editar pregunta"
+
+#: ../lib/survey.php:80
+msgid "No questions associated"
+msgstr "Sin preguntas asociadas"
+
+#: ../lib/survey.php:119
+msgid "Survey Data"
+msgstr "Datos de la encuesta"
+
+#: ../lib/survey.php:135
+msgid "Question"
+msgstr "Pregunta"
+
+#: ../lib/survey.php:137 ../lib/survey.php:149
+msgid "Add new question"
+msgstr "Añadir nueva pregunta"
+
+#: ../lib/survey.php:139
+msgid "New question"
+msgstr "Nueva pregunta"
+
+#: ../lib/survey.php:140
+msgid "All questions"
+msgstr "Todas las preguntas"
+
+#: ../lib/survey.php:141
+msgid "View question"
+msgstr "Ver pregunta"
+
+#: ../lib/survey.php:142
+msgid "Search question"
+msgstr "Buscar pregunta"
+
+#: ../lib/survey.php:143
+msgid "Question not found"
+msgstr "Pregunta no encontrada"
+
+#: ../lib/survey.php:144
+msgid "Question not found in trash bin"
+msgstr "pregunta no encontrada en la papelera"
+
+#: ../lib/survey.php:185
+msgid "No survey associated"
+msgstr "No está asociada a ninguna encuesta"
+
+#: ../lib/survey.php:207
+msgid "Options"
+msgstr "Opciones"
+
+#: ../lib/survey.php:208
+msgid "Text"
+msgstr "Texto"
+
+#: ../lib/survey.php:209
+msgid "Votes"
+msgstr "Votos"
+
+#: ../lib/survey.php:240
+msgid "Question Data"
+msgstr "Datos de la pregunta"
 
 #~ msgid "application"
 #~ msgstr "solicitud"

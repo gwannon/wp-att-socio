@@ -205,7 +205,8 @@ function wp_att_socio_get_question_custom_fields() {
 	global $post;
 	$fields = array(
     'options' => array ('titulo' => __( "Options", 'wp-att-socio' ), 'tipo' => 'repeater', "min" => 2, "max => 10", "fields" => array (
-      'option' => array ('titulo' => __( "Text", 'wp-att-socio' ), 'tipo' => 'text')
+      'option' => array ('titulo' => __( "Text", 'wp-att-socio' ), 'tipo' => 'text'),
+			'votes' => array ('titulo' => __( "Votes", 'wp-att-socio' ), 'tipo' => 'info', 'default' => 0),
     )),
 		'survey' => array ('titulo' => __( 'Survey', 'wp-att-socio' ), 'tipo' => 'select', "valores" => wp_att_socio_question_custom_fields_relatedsurveys()),
 
@@ -244,3 +245,11 @@ function wp_att_socio_question_add_custom_fields() {
 }
 add_action('add_meta_boxes', 'wp_att_socio_question_add_custom_fields');
 add_action('save_post', 'wp_att_socio_save_custom_fields' );
+
+
+function wp_att_socio_can_fill_survey($survey_id, $user_id) {
+	$users = get_post_meta( $survey_id, '_survey_users', true );
+	if(!is_array($users)) $users = [];
+	if(get_post_meta( $survey_id, '_survey_status', true ) == 1 && !in_array($user_id, $users)) return true;
+		else return false;
+}

@@ -197,6 +197,8 @@ function wp_att_socio_show_custom_fields() { //Show box
                             <option value="<?php echo $label; ?>"<?php if ($label == $rest[$i][$key]) echo " selected='selected'"; ?>><?php echo $value; ?></option>
                           <?php } ?>	
                         </select>
+                      <?php } elseif ($subfields['tipo'] == 'info') { ?>
+                        <input  type="text" disabled="disabled" class="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" id="_<?php echo $type; ?>_<?php echo $field; ?>_<?php echo $i; ?>_<?php echo $key; ?>" style="width: 100%; opacity: 0.5; background-color: #cecece;" name="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" value="<?php echo (isset($rest[$i][$key]) ? $rest[$i][$key] : (isset($subfields['default']) ? $subfields['default'] : "")); ?>" placeholder="<?php echo $subfields['titulo']; ?>" />
                       <?php } else { ?>
                         <input  type="text" class="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" id="_<?php echo $type; ?>_<?php echo $field; ?>_<?php echo $i; ?>_<?php echo $key; ?>" style="width: 100%;" name="_<?php echo $type; ?>_<?php echo $field; ?>[<?php echo $i; ?>][<?php echo $key; ?>]" value="<?php echo (isset($rest[$i][$key]) ? $rest[$i][$key] : ""); ?>" placeholder="<?php echo $subfields['titulo']; ?>" />
                       <?php } ?>
