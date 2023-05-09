@@ -42,6 +42,7 @@ add_action('wp_enqueue_scripts', 'wp_att_socio_load_scripts');
 include_once(plugin_dir_path(__FILE__).'lib/custom_posts.php');
 include_once(plugin_dir_path(__FILE__).'lib/application.php');
 include_once(plugin_dir_path(__FILE__).'lib/survey.php');
+include_once(plugin_dir_path(__FILE__).'lib/shortcodes.php');
 
 /* ---------- Globals ---------------- */
 define('WP_ATT_SOCIO_DEFAULT_STATUS', 104);

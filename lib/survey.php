@@ -115,8 +115,8 @@ function wp_att_socio_get_survey_custom_fields() {
 
 function wp_att_socio_survey_add_custom_fields() {
   add_meta_box(
-    'box_activities', // $id
-    __('Survey Data', 'wp-att-socio'), // $title 
+    'box_surveys', // $id
+    __('Survey Config', 'wp-att-socio'), // $title 
     'wp_att_socio_show_custom_fields', // $callback
     'survey', // $page
     'normal', // $context
@@ -124,6 +124,22 @@ function wp_att_socio_survey_add_custom_fields() {
 }
 add_action('add_meta_boxes', 'wp_att_socio_survey_add_custom_fields');
 add_action('save_post', 'wp_att_socio_save_custom_fields' );
+
+function wp_att_socio_survey_add_data() {
+  add_meta_box(
+    'box_surveys_data', // $id
+    __('Survey Data', 'wp-att-socio'), // $title 
+    'wp_att_socio_survey_show_data', // $callback
+    'survey', // $page
+    'normal', // $context
+    'high'); // $priority
+}
+add_action('add_meta_boxes', 'wp_att_socio_survey_add_data');
+
+function wp_att_socio_survey_show_data() {
+	global $post;
+	echo wp_att_socio_generate_survey_data($post->ID);
+}
 
 
 //Questions -------------------------
@@ -207,6 +223,7 @@ function wp_att_socio_get_question_custom_fields() {
     'options' => array ('titulo' => __( "Options", 'wp-att-socio' ), 'tipo' => 'repeater', "min" => 2, "max => 10", "fields" => array (
       'option' => array ('titulo' => __( "Text", 'wp-att-socio' ), 'tipo' => 'text'),
 			'votes' => array ('titulo' => __( "Votes", 'wp-att-socio' ), 'tipo' => 'info', 'default' => 0),
+			'opentext' => array ('titulo' => __( "Open text", 'wp-att-socio' ), 'tipo' => 'text'),
     )),
 		'survey' => array ('titulo' => __( 'Survey', 'wp-att-socio' ), 'tipo' => 'select', "valores" => wp_att_socio_question_custom_fields_relatedsurveys()),
 
@@ -236,7 +253,7 @@ function wp_att_socio_question_custom_fields_relatedsurveys () {
 
 function wp_att_socio_question_add_custom_fields() {
   add_meta_box(
-    'box_activities', // $id
+    'box_questions', // $id
     __('Question Data', 'wp-att-socio'), // $title 
     'wp_att_socio_show_custom_fields', // $callback
     'question', // $page
@@ -252,4 +269,48 @@ function wp_att_socio_can_fill_survey($survey_id, $user_id) {
 	if(!is_array($users)) $users = [];
 	if(get_post_meta( $survey_id, '_survey_status', true ) == 1 && !in_array($user_id, $users)) return true;
 		else return false;
+}
+
+
+function wp_att_socio_generate_survey_data($survey_id) { //Mostramos los datos actuales de la encuesta.
+		
+	$html = "<h3 style='margin-top: 40px; font-weight: 700;'>".get_the_title($survey_id)." </h3>";
+	$html .= apply_filters("the_content", get_post_field('post_content', $survey_id));
+
+	$args = array(
+		'post_type' => 'question',
+		'orderby' => 'menu_order',
+		'meta_query' => array(
+				array(
+						'key' => '_question_survey',
+						'value' => $survey_id,
+						'compare' => '=',
+				)
+		)
+	);
+
+	$the_query = new WP_Query($args);
+	if ($the_query->have_posts() ) {
+		$html .= "<ol style='margin-top: 20px; padding: 0px;'>";
+		while ( $the_query->have_posts() ) { 
+			$the_query->the_post();
+			$question_id = get_the_id();
+			$html .= "<li style='margin-bottom: 30px; padding: 0px;'><b>".get_the_title()."</b>";
+			$options = get_post_meta($question_id , '_question_options', true );
+			$total = 0;
+			foreach ($options as $option) {
+					$total = $option['votes'] + $total;
+			}
+			$html .= "<ul style='padding: 10px; margin-bottom: 5px;'>";
+			foreach ($options as $option) {
+				$html .= "<li>".$option['option']." (".($option['votes'] > 0 ? $option['votes'] : "0")." votos / ".($option['votes'] > 0 ? round(($option['votes']*100 / $total), 2) : "0")."% )</li>";
+			}
+			$html .= "</ul>";
+			$html .= sprintf(__("<b>Total:</b> %d votes", 'wp-att-socio'), $total);
+			$html .= "</li>";
+		}
+		$html .= "</ol>";
+	}
+	wp_reset_query();
+	return $html;
 }
