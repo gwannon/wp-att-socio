@@ -138,7 +138,7 @@ add_action('add_meta_boxes', 'wp_att_socio_survey_add_data');
 
 function wp_att_socio_survey_show_data() {
 	global $post;
-	echo wp_att_socio_generate_survey_data($post->ID);
+	echo wp_att_socio_generate_survey_data($post->ID, true);
 }
 
 
@@ -272,7 +272,7 @@ function wp_att_socio_can_fill_survey($survey_id, $user_id) {
 }
 
 
-function wp_att_socio_generate_survey_data($survey_id) { //Mostramos los datos actuales de la encuesta.
+function wp_att_socio_generate_survey_data($survey_id, $showopentexts = false) { //Mostramos los datos actuales de la encuesta.
 		
 	$html = "<h3 style='margin-top: 40px; font-weight: 700;'>".get_the_title($survey_id)." </h3>";
 	$html .= apply_filters("the_content", get_post_field('post_content', $survey_id));
@@ -302,14 +302,37 @@ function wp_att_socio_generate_survey_data($survey_id) { //Mostramos los datos a
 					$total = $option['votes'] + $total;
 			}
 			$html .= "<ul style='padding: 10px; margin-bottom: 5px;'>";
-			foreach ($options as $option) {
-				$html .= "<li>".$option['option']." (".($option['votes'] > 0 ? $option['votes'] : "0")." votos / ".($option['votes'] > 0 ? round(($option['votes']*100 / $total), 2) : "0")."% )</li>";
+			foreach ($options as $option_id => $option) {
+				$html .= "<li>".$option['option']." (".($option['votes'] > 0 ? $option['votes'] : "0")." votos / ".($option['votes'] > 0 ? round(($option['votes']*100 / $total), 2) : "0")."% )";
+				if($showopentexts) {
+					$opentexts = get_post_meta( $question_id , '_question_option_'.$option_id.'_opentexts', true );
+					//print_r($opentexts);die;
+					if(is_array($opentexts) && count($opentexts) > 0) {
+						$html .= " <a href='#question_".$question_id."_option_".$option_id."_opentexts' style='font-weight: bold; text-decoration: none; color: green;' class='showopentexts'>+</a></br>
+						<div id='question_".$question_id."_option_".$option_id."_opentexts' style='display: none; border: 1px solid #000; background-color: #cecece; margin: 10px 0px; padding: 10px 20px;'><b>".$option['opentext']."</b>
+						<ul>"; 
+						foreach ($opentexts as $opentext) {
+							$html .= "<li style='border-top: 1px solid #000; margin-top: 10px; padding-top: 10px;'>".$opentext."</li>";
+						}
+						$html .= "</ul></div>";
+					}
+				}
+				
+				
+				$html.= "</li>";
 			}
 			$html .= "</ul>";
 			$html .= sprintf(__("<b>Total:</b> %d votes", 'wp-att-socio'), $total);
 			$html .= "</li>";
 		}
 		$html .= "</ol>";
+		$html .= "<script>
+			jQuery('.showopentexts').click(function(e) {
+				e.preventDefault();
+				jQuery(jQuery(this).attr('href')).fadeIn();
+			});
+		
+		</script>";
 	}
 	wp_reset_query();
 	return $html;

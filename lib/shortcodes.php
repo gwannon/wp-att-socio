@@ -68,12 +68,18 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 		$message = file_get_contents(dirname(__FILE__)."/../emails/body.html");
 		$message = str_replace("[MESSAGE]", "<center><h1>".__("Thanks you, your application has been received.", 'wp-att-socio')."</h1><h2>".__("As soon as possible we will send you a response.", 'wp-att-socio')."<h2></center>", $message);
 		wp_mail(get_post_meta($post_id, '_application_partner_email', true), __("[Partner Attention Portal]", 'wp-att-socio')." ".__("We have received your appliation", 'wp-att-socio'), $message, get_mail_headers());
-  } else if(isset($_REQUEST['send_survey']) && $_REQUEST['send_survey'] != '') { 
+
+
+
+
+	} else if(isset($_REQUEST['send_survey']) && $_REQUEST['send_survey'] != '') { 
 	
 		/*echo "<pre>";
 		print_r($_REQUEST);	
 		print_r($datos_sesion);
-		echo "</pre>";*/
+		echo "</pre>";
+
+		die;*/
 
 		
 
@@ -102,9 +108,31 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 							if(isset($options[$option_id]['votes'])) $options[$option_id]['votes'] ++;
 							else $options[$option_id]['votes'] = 1;
 							update_post_meta($question_id, '_question_options', $options);
+
+
+							//Guardamos textos si existe 
+							if(isset($_REQUEST['currentsurveyopentext'][$survey_id][$question_id])) {
+								foreach($_REQUEST['currentsurveyopentext'][$survey_id][$question_id] as $option_id => $opentext) {
+									if($opentext != '') {
+										$opentexts = get_post_meta( $question_id , '_question_option_'.$option_id.'_opentexts', true );
+										if(is_array($opentexts)) $opentexts[$option_id] = $opentext; 
+										else {
+											$opentexts = [];
+											$opentexts[] = $opentext;
+										}
+										update_post_meta($question_id, '_question_option_'.$option_id.'_opentexts', $opentexts);
+									}
+								}
+							}
+
+
+
 						}
 					}
 				}
+
+
+
 				$html = "<center><h2>".__("Thanks you, your answers has been received.", 'wp-att-socio')."</h2></center>";
 			} else {
 				$html = "<center><h2>".__("Sorry, you have already participated in this survey or the survey is closed.", 'wp-att-socio')."</h2></center>";
