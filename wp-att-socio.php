@@ -15,9 +15,6 @@
  * WordPress 6.1.1
  */
 
-
-ini_set("display_errors", 1);
-
 //Cargamos el multi-idioma
 function wp_att_socio_plugins_loaded() {
   load_plugin_textdomain('wp-att-socio', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
