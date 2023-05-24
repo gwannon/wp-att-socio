@@ -230,6 +230,7 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 						$args = array(
 							'post_type' => 'question',
 							'orderby' => 'menu_order',
+							'order' => 'ASC',
 							'meta_query' => array(
 									array(
 											'key' => '_question_survey',

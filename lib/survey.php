@@ -60,6 +60,7 @@ function wp_att_socio_survey_custom_column( $column ) {
 		$args = array(
 			'post_type' => 'question',
 			'orderby' => 'menu_order',
+			'order' => 'ASC',
 			'meta_query' => array(
 					array(
 							'key' => '_question_survey',
@@ -138,7 +139,9 @@ add_action('add_meta_boxes', 'wp_att_socio_survey_add_data');
 
 function wp_att_socio_survey_show_data() {
 	global $post;
+	echo '<a href="'.get_admin_url().'edit.php?post_type=survey&post_id='.$post->ID.'&csv=true" class="button">'.__("Export to CSV", 'wp-att-socio').'</a>';
 	echo wp_att_socio_generate_survey_data($post->ID, true);
+
 }
 
 
@@ -274,12 +277,13 @@ function wp_att_socio_can_fill_survey($survey_id, $user_id) {
 
 function wp_att_socio_generate_survey_data($survey_id, $showopentexts = false) { //Mostramos los datos actuales de la encuesta.
 		
-	$html = "<h3 style='margin-top: 40px; font-weight: 700;'>".get_the_title($survey_id)." </h3>";
+	$html = "<h3 style='margin-top: 40px; font-weight: 700;'>".get_the_title($survey_id)."</h3>";
 	$html .= apply_filters("the_content", get_post_field('post_content', $survey_id));
 
 	$args = array(
 		'post_type' => 'question',
 		'orderby' => 'menu_order',
+		'order' => 'ASC',
 		'meta_query' => array(
 				array(
 						'key' => '_question_survey',
@@ -337,3 +341,78 @@ function wp_att_socio_generate_survey_data($survey_id, $showopentexts = false) {
 	wp_reset_query();
 	return $html;
 }
+
+
+
+
+//Export to CSV ---------------------
+function wp_att_socio_export_survey_to_csv() {
+  if (isset($_GET['post_type']) && $_GET['post_type'] == 'survey' && isset($_GET['csv']) && $_GET['csv'] == 'true' && isset($_GET['post_id']) && $_GET['post_id'] > 0) {
+		$csv = addslashes(get_the_title($_GET['post_id']))."\n";
+		$csv .= addslashes(get_post_field('post_content', $_GET['post_id']))."\n";
+
+		$args = array(
+			'post_type' => 'question',
+			'orderby' => 'menu_order',
+			'order' => 'ASC',
+			'meta_query' => array(
+					array(
+							'key' => '_question_survey',
+							'value' => $_GET['post_id'],
+							'compare' => '=',
+					)
+			)
+		);
+	
+		$the_query = new WP_Query($args);
+		if ($the_query->have_posts() ) {
+			while ( $the_query->have_posts() ) { 
+				$the_query->the_post();
+				$question_id = get_the_id();
+				$csv .= get_the_title()."\n";
+				$options = get_post_meta($question_id , '_question_options', true );
+				$total = 0;
+				foreach ($options as $option) {
+						$total = $option['votes'] + $total;
+				}
+				foreach ($options as $option_id => $option) {
+					$csv .= '"'.addslashes($option['option']).'",'.($option['votes'] > 0 ? $option['votes'] : "0").",".($option['votes'] > 0 ? round(($option['votes']*100 / $total), 2) : "0")."%\n";
+					$opentexts = get_post_meta( $question_id , '_question_option_'.$option_id.'_opentexts', true );
+					//print_r($opentexts);die;
+					if(is_array($opentexts) && count($opentexts) > 0) {
+						$csv .= '"'.addslashes($option['opentext']).'"'."\n"; 
+						foreach ($opentexts as $opentext) {
+							$csv .= '"'.addslashes($opentext).'"'."\n"; 
+						}
+					}
+				}
+				$csv .= "Total,".$total."\n";
+			}
+			$csv .=	"Socios que han participado\n";
+			$csv .=	implode("\n", get_post_meta($_GET['post_id'], '_survey_users', true ))."\n";
+		}
+		wp_reset_query();
+
+
+		
+		$now = gmdate("D, d M Y H:i:s");
+		header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+		header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+		header("Last-Modified: {$now} GMT");
+
+		// force download
+		header("Content-Description: File Transfer");
+		header("Content-Encoding: UTF-8");
+		header("Content-Type: text/csv; charset=UTF-8");
+		header("Content-Type: application/force-download");
+		header("Content-Type: application/octet-stream");
+		header("Content-Type: application/download");
+
+		// disposition / encoding on response body
+		header("Content-Disposition: attachment;filename=encuesta-socio.csv");
+		header("Content-Transfer-Encoding: binary");
+		echo $csv;
+		die;
+  }
+}
+add_action( 'admin_init', 'wp_att_socio_export_survey_to_csv', 1 );
