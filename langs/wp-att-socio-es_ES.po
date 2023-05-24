@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ac-update-forms\n"
-"POT-Creation-Date: 2023-05-03 10:29+0200\n"
-"PO-Revision-Date: 2023-05-03 10:29+0200\n"
+"POT-Creation-Date: 2023-05-03 09:23+0200\n"
+"PO-Revision-Date: 2023-05-03 09:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: jorge@enutt.net\n"
 "Language: es_ES\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../lib/application.php:11 ../lib/application.php:22
-#: ../lib/application.php:924
+#: ../lib/application.php:913
 msgid "Applications"
 msgstr "Solicitudes"
 
-#: ../lib/application.php:12 ../lib/application.php:586
+#: ../lib/application.php:12 ../lib/application.php:568
 msgid "Application"
 msgstr "Solicitud"
 
@@ -45,7 +45,7 @@ msgid "All applications"
 msgstr "Todas las solicitudes"
 
 #: ../lib/application.php:18 ../lib/application.php:402
-#: ../lib/application.php:942 ../lib/application.php:947
+#: ../lib/application.php:931 ../lib/application.php:936
 msgid "View application"
 msgstr "Ver solicitud"
 
@@ -140,22 +140,22 @@ msgid "New status"
 msgstr "Nuevo estado"
 
 #: ../lib/application.php:162 ../lib/application.php:399
-#: ../lib/application.php:587 ../lib/application.php:955
+#: ../lib/application.php:569 ../lib/application.php:944
 msgid "Partner number"
 msgstr "Número de socio"
 
 #: ../lib/application.php:163 ../lib/application.php:398
-#: ../lib/application.php:588 ../lib/application.php:956
+#: ../lib/application.php:570 ../lib/application.php:945
 msgid "Name"
 msgstr "Nombre"
 
 #: ../lib/application.php:164 ../lib/application.php:400
-#: ../lib/application.php:589 ../lib/application.php:957
+#: ../lib/application.php:571 ../lib/application.php:946
 msgid "Telephone"
 msgstr "Teléfono"
 
 #: ../lib/application.php:165 ../lib/application.php:401
-#: ../lib/application.php:590 ../lib/application.php:958
+#: ../lib/application.php:572 ../lib/application.php:947
 msgid "Email"
 msgstr "Email"
 
@@ -172,7 +172,7 @@ msgid "Application Data"
 msgstr "Datos de la solicitud"
 
 #: ../lib/application.php:189 ../lib/application.php:206
-#: ../lib/application.php:916 ../lib/application.php:930
+#: ../lib/application.php:905 ../lib/application.php:919
 msgid "Response"
 msgstr "Responder"
 
@@ -190,7 +190,7 @@ msgid "%s %s %s submitted by %s (%s)"
 msgstr "%s %s %s enviado por %s (%s)"
 
 #: ../lib/application.php:406 ../lib/application.php:414
-#: ../lib/application.php:935
+#: ../lib/application.php:924
 msgid "[Partner Attention Portal]"
 msgstr "[Portal de Atención al socio]"
 
@@ -206,112 +206,112 @@ msgstr "Tan pronto como nos sea posible le daremos una respuesta."
 msgid "We have received your appliation"
 msgstr "Hemos recibido su solicitud"
 
-#: ../lib/application.php:452
+#: ../lib/application.php:440
 msgid "Thanks you, your answers has been received."
 msgstr "Gracias, su encuesta ha sido recibida."
 
-#: ../lib/application.php:454
+#: ../lib/application.php:442
 msgid ""
 "Sorry, you have already participated in this survey or the survey is closed."
 msgstr ""
 "Lo sentimos, pero la encuesta ya está cerrada o ya ha participadpo en esta "
 "encuesta. "
 
-#: ../lib/application.php:492 ../lib/application.php:642
+#: ../lib/application.php:474 ../lib/application.php:625
 #, php-format
 msgid "<b>Total:</b> %d votes"
 msgstr "<b>Total:</b> %d votos"
 
-#: ../lib/application.php:542
+#: ../lib/application.php:524
 msgid "Select area"
 msgstr "Seleccione área"
 
-#: ../lib/application.php:568 ../lib/survey.php:8 ../lib/survey.php:19
+#: ../lib/application.php:550 ../lib/survey.php:8 ../lib/survey.php:19
 msgid "Surveys"
 msgstr "Encuestas"
 
-#: ../lib/application.php:568
+#: ../lib/application.php:550
 msgid "Answer surveys"
 msgstr "Responder encuestas"
 
-#: ../lib/application.php:572 ../lib/survey.php:220
+#: ../lib/application.php:554 ../lib/survey.php:220
 msgid "Select survey"
 msgstr "Seleccione encuesta"
 
-#: ../lib/application.php:575 ../lib/survey.php:84 ../lib/survey.php:109
+#: ../lib/application.php:557 ../lib/survey.php:84 ../lib/survey.php:109
 msgid "Open"
 msgstr "Abierta"
 
-#: ../lib/application.php:575 ../lib/survey.php:85 ../lib/survey.php:110
+#: ../lib/application.php:557 ../lib/survey.php:85 ../lib/survey.php:110
 msgid "Closed"
 msgstr "Cerrada"
 
-#: ../lib/application.php:591
+#: ../lib/application.php:573
 msgid "Attach an image/document"
 msgstr "Adjunte un documento o imagen"
 
-#: ../lib/application.php:591
+#: ../lib/application.php:573
 msgid "Supported formats: gif,jpg,jpeg,png,doc,docx,pdf"
 msgstr "Formatos soportados: gif,jpg,jpeg,png,doc,docx,pdf"
 
-#: ../lib/application.php:592
+#: ../lib/application.php:574
 msgid "Send"
 msgstr "Enviar"
 
-#: ../lib/application.php:651
+#: ../lib/application.php:638
 msgid "Send survey"
 msgstr "Enviar encuesta"
 
-#: ../lib/application.php:903
+#: ../lib/application.php:892
 msgid "Export to CSV"
 msgstr "Exportar a CSV"
 
-#: ../lib/application.php:935
+#: ../lib/application.php:924
 #, php-format
 msgid "Response to your application created at %s"
 msgstr "Respuesta a su solicitud hecha el %s"
 
-#: ../lib/application.php:941
+#: ../lib/application.php:930
 msgid "Response sent correctly"
 msgstr "Respuesta enviada correctamente"
 
-#: ../lib/application.php:946
+#: ../lib/application.php:935
 msgid ""
 "An error occurred while trying to send the email. Please try again later."
 msgstr ""
 "Ocurrió un error al intentar enviar el correo electrónico. Por favor, "
 "intentatelo más tarde."
 
-#: ../lib/application.php:954 ../lib/survey.php:52
+#: ../lib/application.php:943 ../lib/survey.php:52
 msgid "Date"
 msgstr "Fecha"
 
-#: ../lib/application.php:965
+#: ../lib/application.php:954
 msgid "Send response"
 msgstr "Enviar respuesta"
 
-#: ../lib/application.php:1006
+#: ../lib/application.php:995
 #, php-format
 msgid "Welcome to our partner attention zone <strong>%s</strong>"
 msgstr "Bienvenido/a a nuestro portal de atención al socio <strong>%s</strong>"
 
-#: ../lib/application.php:1014
+#: ../lib/application.php:1003
 msgid "Login to access to Partner attention zone."
 msgstr "Identifícate para poder acceder a la zona de atención al socio."
 
-#: ../lib/application.php:1016 ../lib/application.php:1017
+#: ../lib/application.php:1005 ../lib/application.php:1006
 msgid "Parnert number (6 digits)"
 msgstr "Nº de socio (6 dígitos)"
 
-#: ../lib/application.php:1020 ../lib/application.php:1021
+#: ../lib/application.php:1009 ../lib/application.php:1010
 msgid "Password"
 msgstr "Contraseña"
 
-#: ../lib/application.php:1023
+#: ../lib/application.php:1012
 msgid "Login"
 msgstr "Entrar"
 
-#: ../lib/application.php:1024
+#: ../lib/application.php:1013
 msgid "Remenber password"
 msgstr "Recordar Contraseña"
 
