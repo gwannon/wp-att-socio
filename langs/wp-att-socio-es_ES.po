@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ac-update-forms\n"
-"POT-Creation-Date: 2023-05-03 09:23+0200\n"
-"PO-Revision-Date: 2023-05-03 09:23+0200\n"
+"POT-Creation-Date: 2023-05-24 16:12+0200\n"
+"PO-Revision-Date: 2023-05-24 16:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: jorge@enutt.net\n"
 "Language: es_ES\n"
@@ -16,15 +16,15 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../lib/application.php:11 ../lib/application.php:22
-#: ../lib/application.php:913
+#: ../lib/application.php:455
 msgid "Applications"
 msgstr "Solicitudes"
 
-#: ../lib/application.php:12 ../lib/application.php:568
+#: ../lib/application.php:12 ../lib/shortcodes.php:209
 msgid "Application"
 msgstr "Solicitud"
 
-#: ../lib/application.php:13 ../lib/survey.php:10 ../lib/survey.php:136
+#: ../lib/application.php:13 ../lib/survey.php:10 ../lib/survey.php:152
 msgid "Add new"
 msgstr "Anadir nueva"
 
@@ -44,8 +44,8 @@ msgstr "Nueva solicitud"
 msgid "All applications"
 msgstr "Todas las solicitudes"
 
-#: ../lib/application.php:18 ../lib/application.php:402
-#: ../lib/application.php:931 ../lib/application.php:936
+#: ../lib/application.php:18 ../lib/application.php:473
+#: ../lib/application.php:478 ../lib/shortcodes.php:58
 msgid "View application"
 msgstr "Ver solicitud"
 
@@ -139,23 +139,23 @@ msgstr "Añadir estado"
 msgid "New status"
 msgstr "Nuevo estado"
 
-#: ../lib/application.php:162 ../lib/application.php:399
-#: ../lib/application.php:569 ../lib/application.php:944
+#: ../lib/application.php:162 ../lib/application.php:486
+#: ../lib/shortcodes.php:55 ../lib/shortcodes.php:210
 msgid "Partner number"
 msgstr "Número de socio"
 
-#: ../lib/application.php:163 ../lib/application.php:398
-#: ../lib/application.php:570 ../lib/application.php:945
+#: ../lib/application.php:163 ../lib/application.php:487
+#: ../lib/shortcodes.php:54 ../lib/shortcodes.php:211
 msgid "Name"
 msgstr "Nombre"
 
-#: ../lib/application.php:164 ../lib/application.php:400
-#: ../lib/application.php:571 ../lib/application.php:946
+#: ../lib/application.php:164 ../lib/application.php:488
+#: ../lib/shortcodes.php:56 ../lib/shortcodes.php:212
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: ../lib/application.php:165 ../lib/application.php:401
-#: ../lib/application.php:572 ../lib/application.php:947
+#: ../lib/application.php:165 ../lib/application.php:489
+#: ../lib/shortcodes.php:57 ../lib/shortcodes.php:213
 msgid "Email"
 msgstr "Email"
 
@@ -163,7 +163,7 @@ msgstr "Email"
 msgid "Notes"
 msgstr "Notas"
 
-#: ../lib/application.php:167 ../lib/application.php:391
+#: ../lib/application.php:167 ../lib/shortcodes.php:47
 msgid "Attached File"
 msgstr "Archivo adjunto"
 
@@ -172,7 +172,7 @@ msgid "Application Data"
 msgstr "Datos de la solicitud"
 
 #: ../lib/application.php:189 ../lib/application.php:206
-#: ../lib/application.php:905 ../lib/application.php:919
+#: ../lib/application.php:447 ../lib/application.php:461
 msgid "Response"
 msgstr "Responder"
 
@@ -184,136 +184,37 @@ msgstr "Fecha de cerrado"
 msgid "Show all"
 msgstr "Mostrar todo"
 
-#: ../lib/application.php:366
-#, php-format
-msgid "%s %s %s submitted by %s (%s)"
-msgstr "%s %s %s enviado por %s (%s)"
-
-#: ../lib/application.php:406 ../lib/application.php:414
-#: ../lib/application.php:924
-msgid "[Partner Attention Portal]"
-msgstr "[Portal de Atención al socio]"
-
-#: ../lib/application.php:409 ../lib/application.php:413
-msgid "Thanks you, your application has been received."
-msgstr "Gracias, su solicitud ha sido recibida."
-
-#: ../lib/application.php:409 ../lib/application.php:413
-msgid "As soon as possible we will send you a response."
-msgstr "Tan pronto como nos sea posible le daremos una respuesta."
-
-#: ../lib/application.php:414
-msgid "We have received your appliation"
-msgstr "Hemos recibido su solicitud"
-
-#: ../lib/application.php:440
-msgid "Thanks you, your answers has been received."
-msgstr "Gracias, su encuesta ha sido recibida."
-
-#: ../lib/application.php:442
-msgid ""
-"Sorry, you have already participated in this survey or the survey is closed."
-msgstr ""
-"Lo sentimos, pero la encuesta ya está cerrada o ya ha participadpo en esta "
-"encuesta. "
-
-#: ../lib/application.php:474 ../lib/application.php:625
-#, php-format
-msgid "<b>Total:</b> %d votes"
-msgstr "<b>Total:</b> %d votos"
-
-#: ../lib/application.php:524
-msgid "Select area"
-msgstr "Seleccione área"
-
-#: ../lib/application.php:550 ../lib/survey.php:8 ../lib/survey.php:19
-msgid "Surveys"
-msgstr "Encuestas"
-
-#: ../lib/application.php:550
-msgid "Answer surveys"
-msgstr "Responder encuestas"
-
-#: ../lib/application.php:554 ../lib/survey.php:220
-msgid "Select survey"
-msgstr "Seleccione encuesta"
-
-#: ../lib/application.php:557 ../lib/survey.php:84 ../lib/survey.php:109
-msgid "Open"
-msgstr "Abierta"
-
-#: ../lib/application.php:557 ../lib/survey.php:85 ../lib/survey.php:110
-msgid "Closed"
-msgstr "Cerrada"
-
-#: ../lib/application.php:573
-msgid "Attach an image/document"
-msgstr "Adjunte un documento o imagen"
-
-#: ../lib/application.php:573
-msgid "Supported formats: gif,jpg,jpeg,png,doc,docx,pdf"
-msgstr "Formatos soportados: gif,jpg,jpeg,png,doc,docx,pdf"
-
-#: ../lib/application.php:574
-msgid "Send"
-msgstr "Enviar"
-
-#: ../lib/application.php:638
-msgid "Send survey"
-msgstr "Enviar encuesta"
-
-#: ../lib/application.php:892
+#: ../lib/application.php:434
 msgid "Export to CSV"
 msgstr "Exportar a CSV"
 
-#: ../lib/application.php:924
+#: ../lib/application.php:466 ../lib/shortcodes.php:62 ../lib/shortcodes.php:70
+msgid "[Partner Attention Portal]"
+msgstr "[Portal de Atención al socio]"
+
+#: ../lib/application.php:466
 #, php-format
 msgid "Response to your application created at %s"
 msgstr "Respuesta a su solicitud hecha el %s"
 
-#: ../lib/application.php:930
+#: ../lib/application.php:472
 msgid "Response sent correctly"
 msgstr "Respuesta enviada correctamente"
 
-#: ../lib/application.php:935
+#: ../lib/application.php:477
 msgid ""
 "An error occurred while trying to send the email. Please try again later."
 msgstr ""
 "Ocurrió un error al intentar enviar el correo electrónico. Por favor, "
 "intentatelo más tarde."
 
-#: ../lib/application.php:943 ../lib/survey.php:52
+#: ../lib/application.php:485 ../lib/survey.php:52
 msgid "Date"
 msgstr "Fecha"
 
-#: ../lib/application.php:954
+#: ../lib/application.php:496
 msgid "Send response"
 msgstr "Enviar respuesta"
-
-#: ../lib/application.php:995
-#, php-format
-msgid "Welcome to our partner attention zone <strong>%s</strong>"
-msgstr "Bienvenido/a a nuestro portal de atención al socio <strong>%s</strong>"
-
-#: ../lib/application.php:1003
-msgid "Login to access to Partner attention zone."
-msgstr "Identifícate para poder acceder a la zona de atención al socio."
-
-#: ../lib/application.php:1005 ../lib/application.php:1006
-msgid "Parnert number (6 digits)"
-msgstr "Nº de socio (6 dígitos)"
-
-#: ../lib/application.php:1009 ../lib/application.php:1010
-msgid "Password"
-msgstr "Contraseña"
-
-#: ../lib/application.php:1012
-msgid "Login"
-msgstr "Entrar"
-
-#: ../lib/application.php:1013
-msgid "Remenber password"
-msgstr "Recordar Contraseña"
 
 #: ../lib/custom_posts.php:31
 msgid "View file"
@@ -339,7 +240,100 @@ msgstr "Buscar localización"
 msgid "Add image"
 msgstr "Añadir imagen"
 
-#: ../lib/survey.php:9 ../lib/survey.php:175 ../lib/survey.php:211
+#: ../lib/shortcodes.php:22
+#, php-format
+msgid "%s %s %s submitted by %s (%s)"
+msgstr "%s %s %s enviado por %s (%s)"
+
+#: ../lib/shortcodes.php:65 ../lib/shortcodes.php:69
+msgid "Thanks you, your application has been received."
+msgstr "Gracias, su solicitud ha sido recibida."
+
+#: ../lib/shortcodes.php:65 ../lib/shortcodes.php:69
+msgid "As soon as possible we will send you a response."
+msgstr "Tan pronto como nos sea posible le daremos una respuesta."
+
+#: ../lib/shortcodes.php:70
+msgid "We have received your appliation"
+msgstr "Hemos recibido su solicitud"
+
+#: ../lib/shortcodes.php:136
+msgid "Thanks you, your answers has been received."
+msgstr "Gracias, su encuesta ha sido recibida."
+
+#: ../lib/shortcodes.php:138
+msgid ""
+"Sorry, you have already participated in this survey or the survey is closed."
+msgstr ""
+"Lo sentimos, pero la encuesta ya está cerrada o ya ha participado en esta "
+"encuesta."
+
+#: ../lib/shortcodes.php:165
+msgid "Select area"
+msgstr "Seleccione área"
+
+#: ../lib/shortcodes.php:191 ../lib/survey.php:8 ../lib/survey.php:19
+msgid "Surveys"
+msgstr "Encuestas"
+
+#: ../lib/shortcodes.php:191
+msgid "Answer surveys"
+msgstr "Responder encuestas"
+
+#: ../lib/shortcodes.php:195 ../lib/survey.php:237
+msgid "Select survey"
+msgstr "Seleccione encuesta"
+
+#: ../lib/shortcodes.php:198 ../lib/survey.php:84 ../lib/survey.php:109
+msgid "Open"
+msgstr "Abierta"
+
+#: ../lib/shortcodes.php:198 ../lib/survey.php:85 ../lib/survey.php:110
+msgid "Closed"
+msgstr "Cerrada"
+
+#: ../lib/shortcodes.php:214
+msgid "Attach an image/document"
+msgstr "Adjunte un documento o imagen"
+
+#: ../lib/shortcodes.php:214
+msgid "Supported formats: gif,jpg,jpeg,png,doc,docx,pdf"
+msgstr "Formatos soportados: gif,jpg,jpeg,png,doc,docx,pdf"
+
+#: ../lib/shortcodes.php:215
+msgid "Send"
+msgstr "Enviar"
+
+#: ../lib/shortcodes.php:277
+msgid "Send survey"
+msgstr "Enviar encuesta"
+
+#: ../lib/shortcodes.php:485
+#, php-format
+msgid "Welcome to our partner attention zone <strong>%s</strong>"
+msgstr "Bienvenido/a a nuestro portal de atención al socio <strong>%s</strong>"
+
+#: ../lib/shortcodes.php:493
+msgid "Login to access to Partner attention zone."
+msgstr "Identifícate para poder acceder a la zona de atención al socio."
+
+#: ../lib/shortcodes.php:495 ../lib/shortcodes.php:496
+msgid "Parnert number (6 digits)"
+msgstr "Nº de socio (6 dígitos)"
+
+#: ../lib/shortcodes.php:499 ../lib/shortcodes.php:500
+msgid "Password"
+msgstr "Contraseña"
+
+#: ../lib/shortcodes.php:502
+msgid "Login"
+msgstr "Entrar"
+
+#: ../lib/shortcodes.php:503
+msgid "Remenber password"
+msgstr "Recordar Contraseña"
+
+#: ../lib/survey.php:9 ../lib/survey.php:191 ../lib/survey.php:228
 msgid "Survey"
 msgstr "Encuesta"
 
@@ -347,7 +341,7 @@ msgstr "Encuesta"
 msgid "Add new survey"
 msgstr "Añadir nueva encuesta"
 
-#: ../lib/survey.php:12 ../lib/survey.php:184
+#: ../lib/survey.php:12 ../lib/survey.php:200
 msgid "Edit survey"
 msgstr "Editar encuesta"
 
@@ -375,11 +369,11 @@ msgstr "Encuesta no encontrada"
 msgid "Survey not found in trash bin"
 msgstr "Encuesta no encontrada en la papelera"
 
-#: ../lib/survey.php:50 ../lib/survey.php:134 ../lib/survey.php:145
+#: ../lib/survey.php:50 ../lib/survey.php:150 ../lib/survey.php:161
 msgid "Questions"
 msgstr "Preguntas"
 
-#: ../lib/survey.php:77 ../lib/survey.php:138
+#: ../lib/survey.php:77 ../lib/survey.php:154
 msgid "Edit question"
 msgstr "Editar pregunta"
 
@@ -388,60 +382,73 @@ msgid "No questions associated"
 msgstr "Sin preguntas asociadas"
 
 #: ../lib/survey.php:119
+msgid "Survey Config"
+msgstr "Configuración Encuesta"
+
+#: ../lib/survey.php:131
 msgid "Survey Data"
 msgstr "Datos de la encuesta"
 
-#: ../lib/survey.php:135
+#: ../lib/survey.php:151
 msgid "Question"
 msgstr "Pregunta"
 
-#: ../lib/survey.php:137 ../lib/survey.php:149
+#: ../lib/survey.php:153 ../lib/survey.php:165
 msgid "Add new question"
 msgstr "Añadir nueva pregunta"
 
-#: ../lib/survey.php:139
+#: ../lib/survey.php:155
 msgid "New question"
 msgstr "Nueva pregunta"
 
-#: ../lib/survey.php:140
+#: ../lib/survey.php:156
 msgid "All questions"
 msgstr "Todas las preguntas"
 
-#: ../lib/survey.php:141
+#: ../lib/survey.php:157
 msgid "View question"
 msgstr "Ver pregunta"
 
-#: ../lib/survey.php:142
+#: ../lib/survey.php:158
 msgid "Search question"
 msgstr "Buscar pregunta"
 
-#: ../lib/survey.php:143
+#: ../lib/survey.php:159
 msgid "Question not found"
 msgstr "Pregunta no encontrada"
 
-#: ../lib/survey.php:144
+#: ../lib/survey.php:160
 msgid "Question not found in trash bin"
-msgstr "pregunta no encontrada en la papelera"
+msgstr "Pregunta no encontrada en la papelera"
 
-#: ../lib/survey.php:185
+#: ../lib/survey.php:201
 msgid "No survey associated"
 msgstr "No está asociada a ninguna encuesta"
 
-#: ../lib/survey.php:207
+#: ../lib/survey.php:223
 msgid "Options"
 msgstr "Opciones"
 
-#: ../lib/survey.php:208
+#: ../lib/survey.php:224
 msgid "Text"
 msgstr "Texto"
 
-#: ../lib/survey.php:209
+#: ../lib/survey.php:225
 msgid "Votes"
 msgstr "Votos"
 
-#: ../lib/survey.php:240
+#: ../lib/survey.php:226
+msgid "Open text"
+msgstr "Texto abierto"
+
+#: ../lib/survey.php:257
 msgid "Question Data"
 msgstr "Datos de la pregunta"
+
+#: ../lib/survey.php:325
+#, php-format
+msgid "<b>Total:</b> %d votes"
+msgstr "<b>Total:</b> %d votos"
 
 #~ msgid "application"
 #~ msgstr "solicitud"
