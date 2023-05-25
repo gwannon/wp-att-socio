@@ -185,25 +185,16 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 
 			$html .= "</li>";
 		}
-
-		if ( current_user_can( 'manage_options' ) ) {
-
-			$html .= "<li id='tab-survey' style='background-image: url(/wp-content/plugins/wp-att-socio/assets/images/encuesta.svg);'><h3>".__("Surveys", 'wp-att-socio')."</h3><button>".__("Answer surveys", 'wp-att-socio')."</button>";
 		
-
-			$html .= "<select name='survey_type'>";
-			$html .= "<option value='' selected='true' disabled='disabled'>".__("Select survey", 'wp-att-socio')."</option>";
-			$surveys = get_posts(["post_type" => 'survey', "order_by" => "menu-order", "order" => "ASC", "post_status" => "publish"]);
-			foreach ($surveys as $survey) {
-				$html .= "<option value='survey-".$survey->ID."'>".get_the_title($survey->ID)." (".(get_post_meta($survey->ID, '_survey_status', true ) == 1 ? __("Open" , 'wp-att-socio') : __("Closed", 'wp-att-socio')).")</option>";
-			}
-			$html .= "</select>";
-
-			$html .= "</li>";
-
-
+		$html .= "<li id='tab-survey' style='background-image: url(/wp-content/plugins/wp-att-socio/assets/images/encuesta.svg);'><h3>".__("The partner responds", 'wp-att-socio')."</h3><button>".__("Answer surveys", 'wp-att-socio')."</button>";
+		$html .= "<select name='survey_type'>";
+		$html .= "<option value='' selected='true' disabled='disabled'>".__("Select survey", 'wp-att-socio')."</option>";
+		$surveys = get_posts(["post_type" => 'survey', "order_by" => "menu-order", "order" => "ASC", "post_status" => "publish"]);
+		foreach ($surveys as $survey) {
+			$html .= "<option value='survey-".$survey->ID."'>".get_the_title($survey->ID)." (".(get_post_meta($survey->ID, '_survey_status', true ) == 1 ? __("Open" , 'wp-att-socio') : __("Closed", 'wp-att-socio')).")</option>";
 		}
-
+		$html .= "</select>";
+		$html .= "</li>";
 
 		$html .= "</ul>";
 		$html .= "<div><div><label>".__("Application", 'wp-att-socio')."<br/><textarea name='application_text' rows='10'></textarea></label></div>";
@@ -216,89 +207,89 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 		$html .= "</form>";
 
 
-		if ( current_user_can( 'manage_options' ) ) {
-			$surveys = get_posts(["post_type" => 'survey', "order_by" => "menu-order", "order" => "ASC", "post_status" => "publish"]);
-			foreach ($surveys as $survey) {
-				$html .= "<div id='survey-".$survey->ID."' class='survey'>";
-				if(!wp_att_socio_can_fill_survey($survey->ID, $datos_sesion['user_id'])) { 
-					$html .= wp_att_socio_generate_survey_data($survey->ID);
-				} else {
-					$html .= "<form id='survey-".$survey->ID."-form' method='post'><h2>".get_the_title($survey->ID)." </h2>";
-					$html .= apply_filters("the_content", $survey->post_content);
-					//$temp = $post;
-					//Si no está cerrada y no ha participado
-						$args = array(
-							'post_type' => 'question',
-							'orderby' => 'menu_order',
-							'order' => 'ASC',
-							'meta_query' => array(
-									array(
-											'key' => '_question_survey',
-											'value' => $survey->ID,
-											'compare' => '=',
-									)
-							)
-						);
-						$the_query = new WP_Query($args);
-						if ($the_query->have_posts() ) {
-							$html .= "<ol style='margin-top: 20px; padding: 0px;'>";
-							while ( $the_query->have_posts() ) { 
-								$the_query->the_post();
-								$html .= "<li style='margin-bottom: 30px; padding: 0px;'><b>".get_the_title()."</b>";
+		
+		$surveys = get_posts(["post_type" => 'survey', "order_by" => "menu-order", "order" => "ASC", "post_status" => "publish"]);
+		foreach ($surveys as $survey) {
+			$html .= "<div id='survey-".$survey->ID."' class='survey'>";
+			if(!wp_att_socio_can_fill_survey($survey->ID, $datos_sesion['user_id'])) { 
+				$html .= wp_att_socio_generate_survey_data($survey->ID);
+			} else {
+				$html .= "<form id='survey-".$survey->ID."-form' method='post'><h2>".get_the_title($survey->ID)." </h2>";
+				$html .= apply_filters("the_content", $survey->post_content);
+				//$temp = $post;
+				//Si no está cerrada y no ha participado
+					$args = array(
+						'post_type' => 'question',
+						'orderby' => 'menu_order',
+						'order' => 'ASC',
+						'meta_query' => array(
+								array(
+										'key' => '_question_survey',
+										'value' => $survey->ID,
+										'compare' => '=',
+								)
+						)
+					);
+					$the_query = new WP_Query($args);
+					if ($the_query->have_posts() ) {
+						$html .= "<ol style='margin-top: 20px; padding: 0px;'>";
+						while ( $the_query->have_posts() ) { 
+							$the_query->the_post();
+							$html .= "<li style='margin-bottom: 30px; padding: 0px;'><b>".get_the_title()."</b>";
 
 
-								$options = get_post_meta( $post->ID, '_question_options', true );
-								$total = 0;
-								foreach ($options as $option) {
-										$total = $option['votes'] + $total;
+							$options = get_post_meta( $post->ID, '_question_options', true );
+							$total = 0;
+							foreach ($options as $option) {
+									$total = $option['votes'] + $total;
+							}
+							$html .= "<ul>";
+							foreach ($options as $key => $option) {
+								
+								if(isset($option['opentext']) && $option['opentext'] != '') {
+									$html .= "<li><label><input type='radio' data-show-opentext='#opentext-".$survey->ID."-".$post->ID."-".$key."' name=\"currentsurvey[".$survey->ID."][".$post->ID."]\" value='".$key."' required='required'> ".$option['option']."</label>";
+								
+									$html .="<div id='opentext-".$survey->ID."-".$post->ID."-".$key."' style='display: none;'>
+										<b>".addslashes($option['opentext'])."</b><br/>
+										<textarea rows='10' cols='50' name=\"currentsurveyopentext[".$survey->ID."][".$post->ID."][".$key."]\" maxlength='500' disabled='disabled'></textarea>
+									</div>";
+								} else {
+									$html .= "<li><label><input type='radio' name=\"currentsurvey[".$survey->ID."][".$post->ID."]\" value='".$key."' required='required'> ".$option['option']."</label>";
 								}
-								$html .= "<ul>";
-								foreach ($options as $key => $option) {
-									
-									if(isset($option['opentext']) && $option['opentext'] != '') {
-										$html .= "<li><label><input type='radio' data-show-opentext='#opentext-".$survey->ID."-".$post->ID."-".$key."' name=\"currentsurvey[".$survey->ID."][".$post->ID."]\" value='".$key."' required='required'> ".$option['option']."</label>";
-									
-										$html .="<div id='opentext-".$survey->ID."-".$post->ID."-".$key."' style='display: none;'>
-											<b>".addslashes($option['opentext'])."</b><br/>
-											<textarea rows='10' cols='50' name=\"currentsurveyopentext[".$survey->ID."][".$post->ID."][".$key."]\" maxlength='500' disabled='disabled'></textarea>
-										</div>";
-									} else {
-										$html .= "<li><label><input type='radio' name=\"currentsurvey[".$survey->ID."][".$post->ID."]\" value='".$key."' required='required'> ".$option['option']."</label>";
-									}
-									
-									
-									$html .= "</li>";
-								}
-								$html .= "</ul>";
+								
+								
 								$html .= "</li>";
 							}
-							$html .= "</ol>";
+							$html .= "</ul>";
+							$html .= "</li>";
 						}
-						wp_reset_query();
-						$html .= "<input type='submit' name='send_survey' value='".__("Send survey", 'wp-att-socio')."' /></form>";
+						$html .= "</ol>";
 					}
-					$html .= "</div>";
-			}
-			$html .= "<script>
-				jQuery('input[type=radio]').click(function(){
-					jQuery('input[type=radio]').each(function(){
-						if(typeof jQuery(this).data('show-opentext') == 'string' && jQuery(this).is(':checked')) {
-							jQuery(jQuery(this).data('show-opentext')).fadeIn();
-							jQuery(jQuery(this).data('show-opentext')+' > textarea').attr('disabled', false);
-						} else if(typeof jQuery(this).data('show-opentext') == 'string') {
-							jQuery(jQuery(this).data('show-opentext')).fadeOut();
-							jQuery(jQuery(this).data('show-opentext')+' > textarea').val('');
-							jQuery(jQuery(this).data('show-opentext')+' > textarea').attr('disabled', true);
-						} 
-					});
-				});
-			
-			
-			</script>";
+					wp_reset_query();
+					$html .= "<input type='submit' name='send_survey' value='".__("Send survey", 'wp-att-socio')."' /></form>";
+				}
+				$html .= "</div>";
 		}
+		$html .= "<script>
+			jQuery('input[type=radio]').click(function(){
+				jQuery('input[type=radio]').each(function(){
+					if(typeof jQuery(this).data('show-opentext') == 'string' && jQuery(this).is(':checked')) {
+						jQuery(jQuery(this).data('show-opentext')).fadeIn();
+						jQuery(jQuery(this).data('show-opentext')+' > textarea').attr('disabled', false);
+					} else if(typeof jQuery(this).data('show-opentext') == 'string') {
+						jQuery(jQuery(this).data('show-opentext')).fadeOut();
+						jQuery(jQuery(this).data('show-opentext')+' > textarea').val('');
+						jQuery(jQuery(this).data('show-opentext')+' > textarea').attr('disabled', true);
+					} 
+				});
+			});
+		
+		
+		</script>";
+	}
 
 
-  }
+
   $html .= "<style>
   #partner-attention > ul {
 		display: flex;
@@ -398,27 +389,25 @@ function wp_att_socio_shortcode ($params = array(), $content = null) {
 	
   </style>";
 	
-	if ( current_user_can( 'manage_options' ) ) {
-		$html .= "<style>
-			@media (min-width: 600px) {
-				#partner-attention > ul > li {
-					width: calc(50% - 12px);
-				}
+	$html .= "<style>
+		@media (min-width: 600px) {
+			#partner-attention > ul > li {
+				width: calc(50% - 12px);
 			}
+		}
 
-			.survey {
-				display: none;
-				margin: auto;
-				border: 1px solid #cecece;
-				border-radius: 10px;
-				padding: 20px;
-			}
+		.survey {
+			display: none;
+			margin: auto;
+			border: 1px solid #cecece;
+			border-radius: 10px;
+			padding: 20px;
+		}
 
-			.survey.opened {
-				display: block;
-			}
-		</style>";
-	}
+		.survey.opened {
+			display: block;
+		}
+	</style>";
 
 
   $html .= "<script>
