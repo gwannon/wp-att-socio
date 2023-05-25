@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ac-update-forms\n"
 "POT-Creation-Date: 2023-05-25 09:15+0200\n"
-"PO-Revision-Date: 2023-05-25 09:17+0200\n"
+"PO-Revision-Date: 2023-05-25 09:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: jorge@enutt.net\n"
 "Language: es_ES\n"
@@ -278,7 +278,7 @@ msgstr "El Socio responde"
 
 #: ../lib/shortcodes.php:189
 msgid "Answer surveys"
-msgstr "Responder encuestas"
+msgstr "Responder"
 
 #: ../lib/shortcodes.php:191 ../lib/survey.php:240
 msgid "Select survey"
